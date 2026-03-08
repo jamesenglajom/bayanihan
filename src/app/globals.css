@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  /* This creates a 'bg-hero' utility */
+  --background-image-hero: url('/banner/banner.png');
+ 
+  --color-theme-dark: #192330;
+  --color-theme-red: #C62127;
+  --color-theme-blue: #3E639B;
+  --color-theme-yellow: #E9C93B;
+  --color-theme-cream: #F5D8A3;
+  --color-theme-alice:#f0f4f8;
+  --font-poppins: var(--font-poppins);
+  --font-fraunces: var(--font-fraunces);
+}
+
+@layer utilities {
+  .font-poppins {
+    font-family: var(--font-poppins);
+  }
+  .font-fraunces {
+    font-family: var(--font-fraunces);
+  }
+}
+
+/* anchor scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Offset for fixed headers */
+[id] {
+  scroll-margin-top: 80px; /* Height of your header */
+}

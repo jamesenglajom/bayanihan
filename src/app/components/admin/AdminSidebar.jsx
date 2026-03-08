@@ -36,6 +36,8 @@ export const adminNav = [
 
 function AdminSidebar() {
     const pathname = usePathname();
+    console.log("pathname", pathname)
+    console.log("check", pathname === adminNav[4]?.url)
   return (
     <div className={`flex flex-col px-2 bg-theme-dark w-64 gap-5 relative`}>
       {/* LOGO  */}

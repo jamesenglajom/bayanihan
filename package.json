@@ -8,14 +8,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@auth/upstash-redis-adapter": "^2.11.1",
     "@tiptap/extension-image": "^3.20.0",
     "@tiptap/react": "^3.20.0",
     "@tiptap/starter-kit": "^3.20.0",
+    "@upstash/redis": "^1.36.3",
+    "bcryptjs": "^3.0.3",
     "dayjs": "^1.11.19",
     "lucide-react": "^0.575.0",
-    "next": "16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "next": "^16.1.6",
+    "next-auth": "^5.0.0-beta.30",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",

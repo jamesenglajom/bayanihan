@@ -5,28 +5,28 @@ import Image from "next/image";
 function Events() {
   const eventsList = [
     {
-      date: "2026-03-07",
-      badge: "Culture",
+      date: "2026-04-11",
+      badge: "Launching",
       image: "/images/sample-image.jpg",
-      title: "Fiesta celebration night",
-      venue: "Downtown",
-      excerpt: "Music, food and dancing under the stars",
+      title: "You are invited to the launching of Bayanihan Exchange in Sweden",
+      venue: "Big Tambayan Lokal, Torslanda torg",
+      excerpt: "Music, food and dancing",
     },
     {
-      date: "2026-03-14",
-      badge: "Outreach",
+      date: "2026-05-01",
+      badge: "Community",
       image: "/images/sample-image.jpg",
-      title: "Community service day",
-      venue: "Riverside",
+      title: "Concert for a Cause",
+      venue: "TBA",
       excerpt: "Helping hands making real difference together",
     },
     {
-      date: "2026-03-20",
-      badge: "Youth",
+      date: "2026-06-13",
+      badge: "Community",
       image: "/images/sample-image.jpg",
-      title: "Leadership workshop series",
-      venue: "Community Center",
-      excerpt: "Building tomorrow's leaders today",
+      title: "Philippine Independence Day Celebration 2026",
+      venue: "TBA",
+      excerpt: "",
     },
   ];
 

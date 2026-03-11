@@ -1,4 +1,6 @@
 
+export const dynamic = 'force-static';
+
 import { getFAQs } from "@/app/lib/upstash";
 
 
@@ -14,7 +16,6 @@ import Contact from "@/app/components/Contact";
 import Donate from "@/app/components/Donate";
 import Growth from "@/app/components/Growth";
 import Footer from "@/app/components/Footer";
-
 
 
 export default async function Home() {

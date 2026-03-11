@@ -32,6 +32,7 @@ export const adminNav = [
   { type: "menu-item", url: "/admin/events", label: "Events", icon: <EventsIcon />  },
   { type: "menu-item", url: "/admin/news", label: "News", icon: <NewsIcon /> },
   { type: "menu-item", url: "/admin/announcements", label: "Announcements", icon: <AnnounceIcon />  },
+  { type: "menu-item", url: "/admin/faqs", label: "FAQs", icon: <AnnounceIcon />  },
 ];
 
 function AdminSidebar() {

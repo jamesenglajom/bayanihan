@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@auth/upstash-redis-adapter": "^2.11.1",
+    "@hello-pangea/dnd": "^18.0.1",
     "@tiptap/extension-image": "^3.20.0",
     "@tiptap/react": "^3.20.0",
     "@tiptap/starter-kit": "^3.20.0",

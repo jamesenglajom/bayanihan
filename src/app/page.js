@@ -1,3 +1,7 @@
+
+import { getFAQs } from "@/app/lib/upstash";
+
+
 import Navbar from "@/app/components/Navbar";
 import Banner from "@/app/components/Banner";
 import WhatWeDo from "@/app/components/WhatWeDo";
@@ -11,7 +15,11 @@ import Donate from "@/app/components/Donate";
 import Growth from "@/app/components/Growth";
 import Footer from "@/app/components/Footer";
 
-export default function Home() {
+
+
+export default async function Home() {
+  const faqs = await getFAQs();
+  console.log(faqs)
   return (
     <div className="relative">
       <Navbar />
@@ -21,7 +29,7 @@ export default function Home() {
       <SpotLight />
       <Events />
       <News />
-      <Faqs />
+      <Faqs faqsList={faqs}/>
       <Growth />
       <Donate />
       <Contact />

@@ -1,5 +1,5 @@
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 import { redis, getFAQs } from "@/app/lib/upstash";
 

@@ -1,81 +1,111 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 
-const EmailIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-    >
-      <path
-        fill="currentColor"
-        d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0l-8 5l-8-5zm0 12H4V8l8 5l8-5z"
-      />
-    </svg>
-  );
-};
+const EmailIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+);
 
-const PhoneIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-    >
-      <path
-        fill="currentColor"
-        d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0l-8 5l-8-5zm0 12H4V8l8 5l8-5z"
-      />
-    </svg>
-  );
-};
+const PhoneIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.28-2.28a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+);
 
 function Contact() {
   const contactItems = [
     {
-      icon: EmailIcon(),
+      icon: <EmailIcon />,
       name: "Email",
-      message: "Send as a message",
-      value: "email.noemail.com",
+      message: "Send us a message",
+      value: "hello@besweden.org",
+      color: "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
     },
     {
-      icon: PhoneIcon(),
+      icon: <PhoneIcon />,
       name: "Phone",
       message: "Call us anytime",
-      value: "+1 (111) 111-1111",
+      value: "+46 123 456 789",
+      color: "bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400"
     },
   ];
+
   return (
-    <div id="contact" className="w-full py-7.5 my-7">
-      <div className="container mx-auto flex flex-col gap-8">
-        <div className="flex flex-col gap-5">
-          <div className="font-bold">Connect</div>
-          <h2 className="font-bold text-5xl font-fraunces">
+    <section id="contact" className="w-full py-16 md:py-24 bg-white dark:bg-neutral-950 transition-colors duration-500">
+      <div className="container mx-auto px-4 md:px-6">
+        
+        {/* Header Animation */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col gap-4 mb-12 md:mb-16"
+        >
+          <span className="font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest text-xs">Connect</span>
+          <h2 className="font-bold text-4xl md:text-6xl font-fraunces text-neutral-900 dark:text-neutral-100">
             Send us a message
           </h2>
-          <div>Tell us how we can help you</div>
-        </div>
-        <div className="flex gap-15">
-          <div className="w-[50%] flex items-center">
-            <div className="w-full flex flex-col gap-20">
-              {contactItems.map((item, index) => (
-                <div key={`contact-item-${index}`} className="flex flex-col gap-3">
-                    <div>{item?.icon}</div>
-                    <div className="font-fraunces text-3xl font-bold">{item?.name}</div>
-                    <div>{item?.message}</div>
-                    <div>{item?.value}</div>
+          <p className="text-neutral-600 dark:text-neutral-400 text-lg">Tell us how we can help you or collaborate.</p>
+        </motion.div>
+
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
+          
+          {/* Contact Details Side */}
+          <div className="w-full lg:w-1/2 flex flex-col gap-10 md:gap-16">
+            {contactItems.map((item, index) => (
+              <motion.div 
+                key={`contact-item-${index}`}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+                className="group flex flex-col gap-4"
+              >
+                <div className={`w-12 h-12 flex items-center justify-center rounded-2xl shadow-sm transition-transform group-hover:scale-110 ${item.color}`}>
+                  {item.icon}
                 </div>
-              ))}
+                <div className="space-y-1">
+                  <h3 className="font-fraunces text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                    {item.name}
+                  </h3>
+                  <p className="text-neutral-500 dark:text-neutral-500 font-medium">{item.message}</p>
+                  <p className="text-xl font-semibold text-blue-600 dark:text-blue-400 break-words">
+                    {item.value}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Contact Form Area (Glassmorphism Look) */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="w-full lg:w-1/2 relative min-h-[500px] flex items-center justify-center rounded-[2rem] bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-2xl overflow-hidden p-8"
+          >
+            {/* Background Decorative Blobs */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-400/10 blur-[100px] -z-10" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-yellow-400/10 blur-[100px] -z-10" />
+
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-white dark:bg-neutral-800 rounded-full flex items-center justify-center mx-auto shadow-md">
+                <EmailIcon />
+              </div>
+              <h4 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 font-fraunces">Interactive Form</h4>
+              <p className="text-neutral-500 dark:text-neutral-400 text-sm max-w-xs">
+                Your custom form component will sit here, beautifully integrated with the overall design.
+              </p>
+              <button className="mt-4 px-8 py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-bold rounded-full transition-all hover:scale-105 active:scale-95">
+                Start Writing
+              </button>
             </div>
-          </div>
-          <div className="w-[50%] bg-neutral-200 text-neutral-500 flex items-center justify-center h-125">
-            Form Here
-          </div>
+          </motion.div>
+
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

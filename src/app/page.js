@@ -1,7 +1,7 @@
 
 export const dynamic = 'force-static';
 
-import { getFAQs } from "@/app/lib/upstash";
+import { redis, getFAQs } from "@/app/lib/upstash";
 
 
 import Navbar from "@/app/components/Navbar";
@@ -20,7 +20,12 @@ import Footer from "@/app/components/Footer";
 
 export default async function Home() {
   const faqs = await getFAQs();
-  console.log(faqs)
+  const rawEvents = await redis.zrange(process.env.UPSTASH_KEY_EVENTS, 0, -1, { rev: true });
+  const events = rawEvents
+  .map((item) => (typeof item === 'string' ? JSON.parse(item) : item))
+  // Sort descending: Newest Date first
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+  
   return (
     <div className="relative">
       <Navbar />
@@ -28,7 +33,7 @@ export default async function Home() {
       <WhatWeDo />
       <OurStory />
       <SpotLight />
-      <Events />
+      <Events eventsList={events}/>
       <News />
       <Faqs faqsList={faqs}/>
       <Growth />

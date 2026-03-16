@@ -15,6 +15,7 @@ import Faqs from "@/app/components/Faqs";
 import Contact from "@/app/components/Contact";
 import Donate from "@/app/components/Donate";
 import Growth from "@/app/components/Growth";
+import Leaders from "@/app/components/Leaders";
 import Footer from "@/app/components/Footer";
 
 
@@ -33,6 +34,7 @@ export default async function Home() {
       <WhatWeDo />
       <OurStory />
       <SpotLight />
+      <Leaders />
       <Events eventsList={events}/>
       <News />
       <Faqs faqsList={faqs}/>

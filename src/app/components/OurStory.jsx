@@ -183,12 +183,12 @@ function OurStory() {
           {/* Subtle background pattern/glow */}
           <div className="absolute inset-0 opacity-20 dark:opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-400 via-transparent to-transparent" />
 
-          <div className="relative w-4/5 h-4/5">
+          <div className="relative w-full h-full">
             <Image
-              src="/logo/KAY_bes_emblem_light01pngx4.png"
-              alt="BES Emblem"
+              src="/images/our-story/our-story.webp"
+              alt="Our Story"
               fill
-              className="object-contain dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+              className="object-cover dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
               priority
             />
           </div>

@@ -57,12 +57,12 @@ const team = [
     </p>
   </div>
     `,
-    mainImage: "/team/lorraine-1.jpg",
+    mainImage: "/images/leaders/lorraine-1.webp",
     gallery: [
-      "/team/lorraine-2.jpg", 
-      "/team/lorraine-3.jpg", 
-      "/team/lorraine-4.jpg",
-      "/team/lorraine-5.jpg"
+      "/images/leaders/lorraine-2.webp", 
+      "/images/leaders/lorraine-3.webp", 
+      "/images/leaders/lorraine-4.webp",
+      // "/team/lorraine-5.jpg"
     ],
   },
   {
@@ -113,12 +113,10 @@ const team = [
     </p>
   </div>
     `,
-    mainImage: "/team/lorraine-1.jpg",
+    mainImage: "/images/leaders/montclair-1.webp",
     gallery: [
-      "/team/lorraine-2.jpg", 
-      "/team/lorraine-3.jpg", 
-      "/team/lorraine-4.jpg",
-      "/team/lorraine-5.jpg"
+      "/images/leaders/montclair-2.webp",
+      "/images/leaders/montclair-3.webp",
     ],
   },
   {
@@ -168,12 +166,10 @@ const team = [
     </div>
   </div>
     `,
-    mainImage: "/team/lorraine-1.jpg",
+    mainImage: "/images/leaders/mafe-1.webp",
     gallery: [
-      "/team/lorraine-2.jpg", 
-      "/team/lorraine-3.jpg", 
-      "/team/lorraine-4.jpg",
-      "/team/lorraine-5.jpg"
+      "/images/leaders/mafe-2.webp",
+      "/images/leaders/mafe-3.webp",
     ],
   },
   {
@@ -216,12 +212,11 @@ const team = [
     </div>
   </div>
     `,
-    mainImage: "/team/lorraine-1.jpg",
+    mainImage: "/images/leaders/jerry-1.webp",
     gallery: [
-      "/team/lorraine-2.jpg", 
-      "/team/lorraine-3.jpg", 
-      "/team/lorraine-4.jpg",
-      "/team/lorraine-5.jpg"
+      "/images/leaders/jerry-2.webp", 
+      "/images/leaders/jerry-3.webp", 
+      // "/images/leaders/jerry-4.webp",
     ],
   },
   {
@@ -271,12 +266,10 @@ const team = [
     </p>
   </div>
     `,
-    mainImage: "/team/lorraine-1.jpg",
+    mainImage: "/images/leaders/francis-1.webp",
     gallery: [
-      "/team/lorraine-2.jpg", 
-      "/team/lorraine-3.jpg", 
-      "/team/lorraine-4.jpg",
-      "/team/lorraine-5.jpg"
+      "/images/leaders/francis-2.webp", 
+      "/images/leaders/francis-3.webp", 
     ],
   },
   // Add more members here...
@@ -326,7 +319,7 @@ export default function TeamSection() {
               <img 
                 src={person.mainImage} 
                 alt={person.name}
-                className="w-full h-[400px] lg:h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full aspect-1 lg:h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
 
               {/* Gradient Overlay */}
@@ -425,7 +418,7 @@ export default function TeamSection() {
                     <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
                       <Camera className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     </div>
-                    <h4 className="text-xl">Memories & Milestones</h4>
+                    <h4 className="text-xl">Gallery</h4>
                   </div>
                   <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
                     {selectedPerson.gallery.map((img, idx) => (

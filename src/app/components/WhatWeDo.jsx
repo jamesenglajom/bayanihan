@@ -27,7 +27,7 @@ function WhatWeDo() {
     <section className="py-16 md:py-24 bg-white dark:bg-neutral-950 transition-colors duration-300 overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Header Section */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -40,22 +40,21 @@ function WhatWeDo() {
             What We Do
           </h2>
           <p className="max-w-2xl text-center text-neutral-600 dark:text-neutral-400 text-lg">
-            Dedicated to fostering a vibrant Filipino community in Sweden through 
-            cultural preservation and mutual empowerment.
+            Dedicated to fostering a vibrant Filipino community in Sweden
+            through cultural preservation and mutual empowerment.
           </p>
         </motion.div>
 
         {/* Animated Grid Container */}
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
         >
-          
           {/* Card 1 */}
-          <motion.div 
+          <motion.div
             variants={cardVariants}
             whileHover={{ y: -10 }}
             className="group relative border rounded-2xl border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden pb-14 shadow-sm hover:shadow-xl transition-all duration-300"
@@ -70,59 +69,71 @@ function WhatWeDo() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             <div className="p-6 flex flex-col gap-3">
-              <span className="text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">Culture</span>
+              <span className="text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">
+                Culture
+              </span>
               <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 font-fraunces">
                 Community Support
               </h3>
               <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">
-                Navigating life's challenges through shared wisdom and collective action.
+                Navigating life's challenges through shared wisdom and
+                collective action.
               </p>
             </div>
             <button className="absolute left-6 bottom-5 font-bold text-sm text-blue-600 dark:text-blue-400 flex items-center gap-1 group/btn">
-              Learn More <span className="group-hover/btn:translate-x-1 transition-transform">&rsaquo;</span>
+              Learn More{" "}
+              <span className="group-hover/btn:translate-x-1 transition-transform">
+                &rsaquo;
+              </span>
             </button>
           </motion.div>
 
           {/* Card 2 */}
-          <motion.div 
+          <motion.div
             variants={cardVariants}
             whileHover={{ y: -10 }}
             className="group relative border rounded-2xl border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden pb-14 shadow-sm hover:shadow-xl transition-all duration-300"
           >
             <div className="h-52 w-full relative overflow-hidden">
               <Image
-                src="/banner/banner.png"
+                src="/images/what-we-do/wwd-culture.webp"
                 alt="Outreach"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
               />
             </div>
             <div className="p-6 flex flex-col gap-3">
-              <span className="text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">Outreach</span>
+              <span className="text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">
+                Outreach
+              </span>
               <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 font-fraunces">
                 Local Ties
               </h3>
               <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">
-                Strengthening partnerships with Swedish organizations and institutions.
+                Strengthening partnerships with Swedish organizations and
+                institutions.
               </p>
             </div>
             <button className="absolute left-6 bottom-5 font-bold text-sm text-blue-600 dark:text-blue-400 flex items-center gap-1 group/btn">
-              Learn More <span className="group-hover/btn:translate-x-1 transition-transform">&rsaquo;</span>
+              Learn More{" "}
+              <span className="group-hover/btn:translate-x-1 transition-transform">
+                &rsaquo;
+              </span>
             </button>
           </motion.div>
 
           {/* Card 3 - Wide Card */}
-          <motion.div 
+          {/* <motion.div 
             variants={cardVariants}
             whileHover={{ y: -5 }}
             className="md:col-span-2 relative border rounded-2xl border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden flex flex-col sm:flex-row shadow-sm hover:shadow-xl transition-all duration-300"
           >
             <div className="h-64 sm:h-auto sm:w-1/2 relative overflow-hidden group">
               <Image
-                src="/images/sample-image.jpg"
+                src="/images/what-we-do/wwd-leaders.webp"
                 alt="Leadership"
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                className="object-contain transition-transform duration-700 group-hover:scale-105"
               />
             </div>
             <div className="p-8 sm:w-1/2 flex flex-col justify-center gap-4">
@@ -137,8 +148,56 @@ function WhatWeDo() {
                 Join the Program <span className="group-hover/btn:translate-x-1 transition-transform">&rsaquo;</span>
               </button>
             </div>
-          </motion.div>
+          </motion.div> */}
 
+          <motion.div
+            variants={cardVariants}
+            whileHover={{ y: -5 }}
+            // We added group-hover:shadow-blue-500/10 to give a subtle color glow on hover
+            className="md:col-span-2 relative border rounded-2xl border-neutral-200 dark:border-neutral-800  dark:bg-neutral-900 overflow-hidden flex flex-col sm:flex-row shadow-sm hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 group"
+          >
+            {/* NEW: Updated Image Container */}
+            <div className="h-64 sm:h-auto sm:w-1/2 relative overflow-hidden">
+              {/* 1. THE BLURRED BACKGROUND IMAGE (NEW) */}
+              <Image
+                src="/images/what-we-do/wwd-leaders.webp"
+                alt="" // Decorative, so empty alt is fine here
+                fill
+                // quality={1} // Low quality is fine because it's blurred, improves performance
+                // Key classes: object-cover (fills space), blur-2xl (the blur!), opacity (fade it), scale (prevents edge artifacts)
+                className="object-cover blur-lg opacity-50 scale-110 "
+              />
+
+              {/* 2. THE MAIN/FOREGROUND IMAGE (UPDATED) */}
+              <Image
+                src="/images/what-we-do/wwd-leaders.webp"
+                alt="Leadership"
+                fill
+                // We keep object-contain so the leadership image isn't cropped.
+                // We also added group-hover:scale-105 for the existing hover effect.
+                className="object-contain relative z-10 p-4 transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+
+            <div className="p-8 sm:w-1/2 flex flex-col justify-center gap-4">
+              <span className="text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">
+                Leadership
+              </span>
+              <h3 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 font-fraunces leading-tight">
+                Empowering Future Leaders
+              </h3>
+              <p className="text-neutral-600 dark:text-neutral-400 text-base">
+                Investing in our youth through structured mentorship and
+                heritage education.
+              </p>
+              <button className="font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1 group/btn w-fit">
+                Join the Program{" "}
+                <span className="group-hover/btn:translate-x-1 transition-transform">
+                  &rsaquo;
+                </span>
+              </button>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

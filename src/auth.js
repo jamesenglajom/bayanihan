@@ -94,3 +94,9 @@ export const createUser = async(username, plainPassword) =>  {
   
   return { success: true };
 }
+
+export const generateHash = async(plainPassword) => {
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
+  return hashedPassword;
+}

@@ -23,7 +23,38 @@ import {
   Hash,
   Plus,
   FileText,
+  Info,
+  ImagePlus
 } from "lucide-react";
+
+const BlogAlert = () => {
+  return (
+    <div className="flex items-start gap-4 p-5 mb-8 bg-indigo-50 border border-indigo-100 rounded-2xl shadow-sm">
+      <div className="flex-shrink-0 p-2 bg-white rounded-lg shadow-sm text-indigo-600">
+        <ImagePlus size={20} />
+      </div>
+      <div className="space-y-2">
+        <h3 className="text-xs font-black uppercase tracking-widest text-indigo-900">
+          Media Assets Guide
+        </h3>
+        <p className="text-sm text-indigo-800/80 leading-relaxed">
+          To include new images in your story, please follow the <strong>BES Cloud</strong> media workflow:
+        </p>
+        
+        <ul className="grid gap-2">
+          <li className="flex items-center gap-2 text-xs font-medium text-indigo-700">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+            Send high-res files to the developer for cloud optimization.
+          </li>
+          <li className="flex items-center gap-2 text-xs font-medium text-indigo-700">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+            Use the reserved path format: <code className="px-1.5 py-0.5 bg-white border border-indigo-200 rounded font-mono text-indigo-600">/images/blogs/your-image.webp</code>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
 
 const generateSlug = (text) => {
   return text
@@ -201,6 +232,7 @@ const BlogEditor = ({ blog }) => {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 p-8 bg-slate-50/50 min-h-screen">
+      <BlogAlert />
       {/* --- Section: Media & Title --- */}
       <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
         <label className="text-xs font-bold uppercase tracking-widest text-slate-400 block">

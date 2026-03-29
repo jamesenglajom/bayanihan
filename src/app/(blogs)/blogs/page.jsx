@@ -4,6 +4,7 @@ import Link from "next/link";
 import {redis} from "@/app/lib/upstash"
 import { Calendar, Clock, ArrowRight, ChevronLeft, ChevronRight, Share2 } from "lucide-react";
 
+import { generateHash } from "@/auth";
 
 const getBlogs = async () => {
   try {
@@ -51,6 +52,7 @@ export default async function page({ searchParams }) {
   
   const totalPages = Math.ceil(regularPosts.length / postsPerPage);
   const displayPosts = regularPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
+  console.log("hash:::", await generateHash("7hY@r4N!pL8#wV2x"));
 
   return (
     <div className="min-h-screen bg-[#f8fafc] dark:bg-[#020617] transition-colors duration-700">

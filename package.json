@@ -11,8 +11,13 @@
     "@auth/upstash-redis-adapter": "^2.11.1",
     "@hello-pangea/dnd": "^18.0.1",
     "@tiptap/extension-image": "^3.20.0",
+    "@tiptap/extension-link": "^3.21.0",
+    "@tiptap/extension-placeholder": "^3.21.0",
+    "@tiptap/extension-typography": "^3.21.0",
+    "@tiptap/extension-underline": "^3.21.0",
+    "@tiptap/html": "^3.21.0",
     "@tiptap/react": "^3.20.0",
-    "@tiptap/starter-kit": "^3.20.0",
+    "@tiptap/starter-kit": "^3.21.0",
     "@upstash/redis": "^1.36.3",
     "bcryptjs": "^3.0.3",
     "dayjs": "^1.11.19",
@@ -25,6 +30,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/typography": "^0.5.19",
     "babel-plugin-react-compiler": "1.0.0",
     "tailwindcss": "^4.2.1"
   }

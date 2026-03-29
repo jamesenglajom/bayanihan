@@ -2,7 +2,7 @@ import React from 'react'
 import BlogEditor from '@/app/components/admin/BlogEditor';
 
 export const metadata = {
-  title: "Add Announcements | Admin",
+  title: "Add Blogs | Admin",
 };
 
 export default function page() {

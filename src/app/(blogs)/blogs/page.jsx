@@ -100,7 +100,7 @@ export default async function page({ searchParams }) {
             <article key={blog.id} className="group flex flex-col">
               <Link href={`/blogs/${blog.handle}`} className="relative h-72 mb-6 overflow-hidden rounded-[2rem] shadow-xl">
                  <Image 
-                   src={blog.image} 
+                   src={blog?.main_image} 
                    alt={blog.title} 
                    fill 
                    className="object-cover transition-transform duration-700 group-hover:scale-110"

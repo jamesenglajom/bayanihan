@@ -24,8 +24,9 @@ import {
   Plus,
   FileText,
   Info,
-  ImagePlus
+  ImagePlus,
 } from "lucide-react";
+import ImagePicker from "@/app/components/admin/ImagePicker";
 
 const BlogAlert = () => {
   return (
@@ -38,9 +39,10 @@ const BlogAlert = () => {
           Media Assets Guide
         </h3>
         <p className="text-sm text-indigo-800/80 leading-relaxed">
-          To include new images in your story, please follow the <strong>BES Cloud</strong> media workflow:
+          To include new images in your story, please follow the{" "}
+          <strong>BES Cloud</strong> media workflow:
         </p>
-        
+
         <ul className="grid gap-2">
           <li className="flex items-center gap-2 text-xs font-medium text-indigo-700">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
@@ -48,7 +50,10 @@ const BlogAlert = () => {
           </li>
           <li className="flex items-center gap-2 text-xs font-medium text-indigo-700">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
-            Use the reserved path format: <code className="px-1.5 py-0.5 bg-white border border-indigo-200 rounded font-mono text-indigo-600">/images/blogs/your-image.webp</code>
+            Use the reserved path format:{" "}
+            <code className="px-1.5 py-0.5 bg-white border border-indigo-200 rounded font-mono text-indigo-600">
+              /images/blogs/your-image.webp
+            </code>
           </li>
         </ul>
       </div>
@@ -82,9 +87,11 @@ const BlogEditor = ({ blog }) => {
     categories: blog?.categories || [],
     content: !blog ? "<p>Start writing your story...</p>" : blog?.content,
   });
-
   const [categoryInput, setCategoryInput] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+
+  const [showPicker, setShowPicker] = useState(false);
+  const [pickImageFor, setPickImageFor] = useState("main_image");
 
   const addLink = () => {
     const url = window.prompt("Enter URL");
@@ -137,10 +144,21 @@ const BlogEditor = ({ blog }) => {
     // Result format: blog_lvj8q2w_4k9z2x
     return `${timestamp}_${randomPart}`;
   };
-
+  // ###UNFINISHED
+  const handleImageSelect = (url) => {
+    if(pickImageFor==="main_image"){
+      setPost({ ...post, main_image: url });
+    }else{
+      if (url) editor.chain().focus().setImage({ src: url }).run();
+    }
+    // showPicker is closed automatically by the internal logic, 
+    // but we can ensure it here too:
+    setShowPicker(false);
+  };
+  
   const handleSetMainImage = () => {
-    const url = window.prompt("Enter the URL for the main blog image:");
-    if (url) setPost({ ...post, main_image: url });
+    setPickImageFor("main_image");
+    setShowPicker(true);
   };
 
   const handleTitleChange = (e) => {
@@ -456,7 +474,7 @@ const BlogEditor = ({ blog }) => {
               >
                 <Italic size={16} />
               </button>
-              
+
               {/* Add Underline */}
               <button
                 title="Underline"
@@ -475,7 +493,7 @@ const BlogEditor = ({ blog }) => {
               >
                 H2
               </button>
-              
+
               <button
                 onClick={() =>
                   editor.chain().focus().toggleHeading({ level: 3 }).run()
@@ -505,7 +523,6 @@ const BlogEditor = ({ blog }) => {
               </button>
 
               <div className="w-px h-6 bg-slate-600 mx-1" />
-              
 
               {/* Add Link */}
               <button
@@ -517,8 +534,8 @@ const BlogEditor = ({ blog }) => {
 
               <button
                 onClick={() => {
-                  const url = window.prompt("Insert content image URL:");
-                  if (url) editor.chain().focus().setImage({ src: url }).run();
+                  setPickImageFor("blog_content");
+                  setShowPicker(true);
                 }}
                 className="p-2 hover:bg-blue-500 hover:text-white rounded-lg transition-colors flex items-center gap-2 text-xs font-bold"
               >
@@ -558,6 +575,12 @@ const BlogEditor = ({ blog }) => {
           )}
         </button>
       </div>
+      {showPicker && (
+        <ImagePicker 
+          onSelect={handleImageSelect} 
+          onClose={() => setShowPicker(false)} 
+        />
+      )}
     </div>
   );
 };

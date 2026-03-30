@@ -4,6 +4,43 @@ import Link from "next/link";
 import { Calendar, Clock, ArrowLeft, Share2, Bookmark } from "lucide-react";
 import { getBlogByHandle } from "@/app/lib/fn_server";
 
+export async function generateMetadata({ params }) {
+  const { handle } = await params;
+  const blog = await getBlogByHandle(handle);
+
+  if (!blog) {
+    return {
+      title: "Blog Not Found",
+      description: "The requested blog post could not be found.",
+    };
+  }
+
+  return {
+    title: `${blog.title} | BES Insights`, // Appends your brand name
+    description: blog.excerpt || "Read the latest updates from our community.",
+    openGraph: {
+      title: blog.title,
+      description: blog.excerpt,
+      images: [
+        {
+          url: blog.main_image || "/default-og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: blog.title,
+        },
+      ],
+      type: "article",
+      publishedTime: blog.created_at,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.title,
+      description: blog.excerpt,
+      images: [blog.main_image || "/default-og-image.jpg"],
+    },
+  };
+}
+
 export default async function page({ params }) {
   const { handle } = await params;
   if (!handle) return notFound();

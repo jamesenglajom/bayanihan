@@ -70,9 +70,9 @@ const BlogsTable = ({ blogs = [] }) => {
                         {blog.badge}
                       </span>
                     )}
-                    <div className="text-base font-bold text-slate-900 leading-tight group-hover:text-blue-700 transition-colors">
+                    <Link href={`/blogs/${blog?.handle}`}className="text-base font-bold text-slate-900 leading-tight group-hover:text-blue-700 transition-colors">
                       {blog?.title}
-                    </div>
+                    </Link>
                     <div className="text-sm text-slate-500 line-clamp-1 italic font-serif">
                       "{blog?.excerpt || blog?.description}"
                     </div>

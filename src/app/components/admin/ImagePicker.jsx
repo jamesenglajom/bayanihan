@@ -31,7 +31,7 @@ export default function ImagePicker({ onSelect, onClose }) {
         <div className="p-5 border-b dark:border-zinc-800 flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50">
           <div>
             <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Library</h3>
-            <p className="text-xs text-zinc-500">Select an image from /public/images/blogs</p>
+            <p className="text-xs text-zinc-500">Select an image:</p>
           </div>
           <button 
             onClick={onClose}

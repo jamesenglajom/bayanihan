@@ -5,6 +5,7 @@ import { redis } from "@/app/lib/upstash";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   adapter: UpstashRedisAdapter(redis),

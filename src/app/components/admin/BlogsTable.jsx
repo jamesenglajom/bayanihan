@@ -1,117 +1,141 @@
 "use client";
-import { Pencil, User, Calendar, Tag } from 'lucide-react';
-import React, { useState } from "react";
+import { Pencil, User, Calendar, Tag, Plus, ImageIcon, Search } from 'lucide-react';
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const BlogsTable = ({ blogs = [] }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Reduced for better visibility, adjust as needed
+  const [searchTerm, setSearchTerm] = useState("");
+  const itemsPerPage = 10;
 
-  const totalPages = Math.ceil(blogs.length / itemsPerPage) || 1;
+  // Search Logic
+  const filteredBlogs = useMemo(() => {
+    return blogs.filter(blog => 
+      blog.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blog.author?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [blogs, searchTerm]);
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredBlogs.length / itemsPerPage) || 1;
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = blogs.slice(startIndex, startIndex + itemsPerPage);
+  const currentItems = filteredBlogs.slice(startIndex, startIndex + itemsPerPage);
 
   const goToNext = () => setCurrentPage((p) => Math.min(p + 1, totalPages));
   const goToPrev = () => setCurrentPage((p) => Math.max(p - 1, 1));
 
   return (
-    <div className="w-full p-6 antialiased text-gray-800 bg-gray-50/50 min-h-screen">
-      {/* Header Section */}
-      <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+    <div className="w-full max-w-7xl mx-auto p-4 md:p-8 antialiased text-slate-800">
+      
+      {/* --- Header Section --- */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
         <div>
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Blog Management</h2>
-          <p className="text-slate-500 mt-1">Manage your association's stories and updates.</p>
+          <p className="text-slate-500 mt-1 text-sm font-medium">Manage your association's stories and updates.</p>
         </div>
-        <Link
-          href="/admin/blogs/add"
-          className="flex items-center gap-2 px-6 py-3 rounded-xl transition-all shadow-lg shadow-blue-900/20 font-bold bg-[#003566] hover:bg-[#001d3d] text-white active:scale-95"
-        >
-          + Create New Post
-        </Link>
-      </div>
-
-      <div className="mb-4 inline-block">
-        <span className="text-xs font-bold uppercase tracking-wider bg-white border border-slate-200 text-slate-600 px-4 py-1.5 rounded-full shadow-sm">
-          Total Content: {blogs.length} Posts
-        </span>
+        
+        <div className="flex items-center gap-3">
+          <div className="relative hidden sm:block">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+            <input 
+              type="text"
+              placeholder="Search articles..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500 outline-none transition-all w-64"
+            />
+          </div>
+          <Link
+            href="/admin/blogs/add"
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-200 transition-all duration-300 active:scale-95 font-bold text-sm"
+          >
+            <Plus size={18} />
+            Create Post
+          </Link>
+        </div>
       </div>
 
       {/* --- Desktop Table View --- */}
-      <div className="hidden md:block overflow-hidden border border-slate-200 rounded-2xl shadow-sm bg-white">
+      <div className="hidden md:block overflow-hidden bg-white border border-slate-200 rounded-2xl shadow-sm">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50 border-b border-slate-200">
-              <th className="p-4 font-bold text-slate-500 text-xs uppercase tracking-wider w-16">Preview</th>
-              <th className="p-4 font-bold text-slate-500 text-xs uppercase tracking-wider">Article Details</th>
-              <th className="p-4 font-bold text-slate-500 text-xs uppercase tracking-wider">Author & Stats</th>
-              <th className="p-4 font-bold text-slate-500 text-xs uppercase tracking-wider">Timeline</th>
-              <th className="p-4 font-bold text-slate-500 text-xs uppercase tracking-wider text-right">Actions</th>
+            <tr className="bg-slate-50/50 border-b border-slate-200">
+              <th className="p-4 pl-8 font-bold text-[10px] uppercase tracking-widest text-slate-400 w-24">Preview</th>
+              <th className="p-4 font-bold text-[10px] uppercase tracking-widest text-slate-400">Article Details</th>
+              <th className="p-4 font-bold text-[10px] uppercase tracking-widest text-slate-400 w-56">Author & Read</th>
+              <th className="p-4 font-bold text-[10px] uppercase tracking-widest text-slate-400 w-40">Timeline</th>
+              <th className="p-4 pr-8 text-right font-bold text-[10px] uppercase tracking-widest text-slate-400 w-32">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {currentItems.map((blog, index) => (
-              <tr key={`blog-item-${blog?.handle}-${index}`} className="hover:bg-blue-50/30 transition-colors group">
-                {/* Image Preview */}
-                <td className="p-4">
-                  <div className="w-12 h-12 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden shrink-0">
+              <tr key={blog?.id || index} className="group hover:bg-slate-50/50 transition-all duration-200">
+                {/* Media Column */}
+                <td className="p-4 pl-8">
+                  <div className="relative h-12 w-12 rounded-xl overflow-hidden border border-slate-200 bg-slate-100 flex-shrink-0 shadow-sm">
                     {blog?.main_image ? (
-                      <img src={blog.main_image} alt="" className="w-full h-full object-cover" />
+                      <img
+                        src={blog.main_image}
+                        alt=""
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-slate-300 font-bold text-xl uppercase italic">B</div>
+                      <div className="flex flex-col items-center justify-center h-full bg-slate-200/40 text-slate-400">
+                        <ImageIcon size={16} strokeWidth={1.5} className="flex-shrink-0" />
+                        <span className="text-[7px] font-black mt-0.5 leading-none">NO IMAGE</span>
+                      </div>
                     )}
                   </div>
                 </td>
 
-                {/* Title & Info */}
-                <td className="p-4 max-w-md">
-                  <div className="flex flex-col gap-1.5">
-                    {blog?.badge && (
-                      <span className="w-fit text-[10px] font-black uppercase tracking-widest px-2 py-0.5 bg-blue-100 text-[#003566] rounded">
-                        {blog.badge}
-                      </span>
-                    )}
-                    <Link href={`/blogs/${blog?.handle}`}className="text-base font-bold text-slate-900 leading-tight group-hover:text-blue-700 transition-colors">
+                {/* Article Details Column */}
+                <td className="p-4">
+                  <div className="flex flex-col max-w-md">
+                    <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[10px] font-black bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded border border-indigo-100 uppercase tracking-tight">
+                            {blog?.badge || 'Post'}
+                        </span>
+                    </div>
+                    <span className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1">
                       {blog?.title}
-                    </Link>
-                    <div className="text-sm text-slate-500 line-clamp-1 italic font-serif">
+                    </span>
+                    <span className="text-xs text-slate-400 italic font-serif line-clamp-1 mt-0.5">
                       "{blog?.excerpt || blog?.description}"
-                    </div>
-                    {/* Categories Chips */}
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {blog?.categories?.map((cat, i) => (
-                        <span key={i} className="text-[10px] text-slate-400 font-medium">#{cat}</span>
-                      ))}
-                    </div>
+                    </span>
                   </div>
                 </td>
 
-                {/* Author & Stats */}
-                <td className="p-4">
+                {/* Author Column */}
+                <td className="p-4 text-slate-600">
                   <div className="flex flex-col gap-1">
-                    <div className="flex items-center gap-2 text-sm font-semibold text-slate-700">
-                      <User size={14} className="text-slate-400" /> {blog?.author || "Anonymous"}
+                    <div className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                        <User size={14} className="text-slate-400 flex-shrink-0" /> 
+                        <span className="truncate">{blog?.author || "Anonymous"}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-slate-400">
-                      <Tag size={12} /> {blog?.read_duration || "5 min read"}
+                    <div className="flex items-center gap-2 text-[11px] font-medium text-slate-400">
+                        <Tag size={12} className="flex-shrink-0" /> 
+                        {blog?.read_duration || "5 min read"}
                     </div>
                   </div>
                 </td>
 
-                {/* Dates */}
-                <td className="p-4">
-                  <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
-                    <Calendar size={14} /> {blog?.created_at ? new Date(blog.created_at).toLocaleDateString() : (blog?.date || "N/A")}
+                {/* Timeline Column */}
+                <td className="p-4 text-slate-600">
+                  <div className="flex items-center gap-2 text-xs font-bold whitespace-nowrap">
+                    <Calendar size={14} className="text-slate-400 flex-shrink-0" />
+                    {blog?.created_at ? new Date(blog.created_at).toLocaleDateString() : (blog?.date || "N/A")}
                   </div>
                 </td>
 
-                {/* Action */}
-                <td className="p-4 text-right">
+                {/* Action Column */}
+                <td className="p-4 pr-8 text-right">
                   <Link
                     href={`/admin/blogs/update/${blog?.id}`}
-                    className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold text-blue-600 bg-blue-50 border border-blue-100 rounded-xl hover:bg-[#003566] hover:text-white transition-all duration-200"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2 text-xs font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-900 hover:text-white transition-all duration-300 shadow-sm"
                   >
                     <Pencil size={14} />
-                    <span>Edit Post</span>
+                    Edit
                   </Link>
                 </td>
               </tr>
@@ -124,52 +148,54 @@ const BlogsTable = ({ blogs = [] }) => {
       <div className="grid grid-cols-1 gap-4 md:hidden">
         {currentItems.map((blog) => (
           <div key={blog?.id} className="p-5 bg-white border border-slate-200 rounded-2xl shadow-sm relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-1 h-full bg-[#003566]"></div>
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[10px] font-black bg-slate-100 text-slate-600 px-2 py-1 rounded uppercase tracking-widest">
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-indigo-600"></div>
+            <div className="flex items-center justify-between mb-4 pl-2">
+              <span className="text-[10px] font-black bg-slate-100 text-slate-500 px-2 py-1 rounded border border-slate-200 uppercase tracking-widest">
                 {blog?.badge || 'Post'}
               </span>
-              <span className="text-xs font-bold text-blue-600">
-                {blog?.date || 'Today'}
+              <span className="text-xs font-bold text-slate-400 flex items-center gap-1">
+                <Calendar size={12} className="flex-shrink-0" /> {blog?.date || 'Recent'}
               </span>
             </div>
-            <h3 className="font-extrabold text-lg text-slate-900 leading-tight mb-2">{blog?.title}</h3>
-            <p className="text-sm text-slate-500 mb-4 line-clamp-2 italic font-serif">
+            <h3 className="font-bold text-slate-900 leading-tight mb-2 pl-2">{blog?.title}</h3>
+            <p className="text-xs text-slate-500 mb-5 line-clamp-2 italic font-serif pl-2">
               {blog?.excerpt || "No summary provided."}
             </p>
             <Link
               href={`/admin/blogs/update/${blog?.id}`}
-              className="flex items-center justify-center w-full py-3 bg-slate-50 text-[#003566] font-bold rounded-xl border border-slate-200"
+              className="flex items-center justify-center w-full py-3 bg-slate-900 text-white text-xs font-bold rounded-xl shadow-lg shadow-slate-100 active:scale-95 transition-all"
             >
-              <Pencil size={16} className="mr-2" /> Edit Content
+              <Pencil size={14} className="mr-2" /> Manage Content
             </Link>
           </div>
         ))}
       </div>
 
       {/* --- Pagination --- */}
-      <div className="mt-8 flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
-        <p className="text-sm font-medium text-slate-500">
-          Viewing <span className="text-slate-900">{startIndex + 1} - {Math.min(startIndex + itemsPerPage, blogs.length)}</span> of {blogs.length}
+      <div className="mt-10 flex flex-col items-center gap-6 sm:flex-row sm:justify-between border-t border-slate-100 pt-8">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">
+          Showing <span className="text-slate-900">{startIndex + 1}</span> - <span className="text-slate-900">{Math.min(startIndex + itemsPerPage, filteredBlogs.length)}</span> of {filteredBlogs.length}
         </p>
 
         <div className="flex items-center gap-2">
           <button
             onClick={goToPrev}
             disabled={currentPage === 1}
-            className="px-5 py-2 rounded-xl border border-slate-200 bg-white font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-30 transition-all shadow-sm"
+            className="flex items-center justify-center w-10 h-10 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-20 transition-all shadow-sm"
           >
-            Prev
+            <Pencil size={18} className="rotate-180" /> {/* Replaced Chevron for simplicity */}
           </button>
-          <div className="px-4 text-sm font-bold text-slate-400">
-             {currentPage} <span className="mx-1 text-slate-200">/</span> {totalPages}
+
+          <div className="flex items-center px-5 h-10 bg-slate-900 rounded-xl text-white font-bold text-xs">
+            {currentPage} / {totalPages}
           </div>
+
           <button
             onClick={goToNext}
             disabled={currentPage === totalPages}
-            className="px-5 py-2 rounded-xl border border-slate-200 bg-white font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-30 transition-all shadow-sm"
+            className="flex items-center justify-center w-10 h-10 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-20 transition-all shadow-sm"
           >
-            Next
+             <Pencil size={18} />
           </button>
         </div>
       </div>

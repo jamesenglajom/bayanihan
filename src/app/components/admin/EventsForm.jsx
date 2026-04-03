@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { 
   Calendar, 
   MapPin, 
@@ -11,13 +12,19 @@ import {
   Save, 
   Loader2, 
   Link as LinkIcon, 
-  Type 
+  Plus,
+  X
 } from "lucide-react";
+import ImagePicker from "@/app/components/admin/ImagePicker";
 
 export default function EventsForm({ event }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ type: "", text: "" });
+  const [showPicker, setShowPicker] = useState(false);
+  
+  // Track selected image for immediate UI feedback
+  const [selectedImage, setSelectedImage] = useState(event?.image || "");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -125,19 +132,55 @@ export default function EventsForm({ event }) {
           </div>
         </div>
 
-        {/* Row 3: Image URL */}
-        <div>
-          <label className={labelBase}><ImageIcon size={14} /> Cover Image URL</label>
-          <input
-            name="image"
-            type="url"
-            defaultValue={event?.image || ""}
-            placeholder="https://example.com/image.jpg"
-            className={inputBase}
-          />
+        {/* Row 3: Image Selection Area */}
+        <div className="space-y-4">
+          <label className={labelBase}><ImageIcon size={14} /> Cover Image</label>
+          
+          {/* Interactive Preview Trigger */}
+          <div 
+            onClick={() => setShowPicker(true)}
+            className="relative group cursor-pointer aspect-[21/9] w-full rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 overflow-hidden hover:border-blue-400 hover:bg-blue-50/30 transition-all duration-300"
+          >
+            {selectedImage ? (
+              <>
+                <Image 
+                  src={selectedImage} 
+                  alt="Preview" 
+                  fill 
+                  className="object-cover group-hover:scale-105 transition-transform duration-500" 
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white backdrop-blur-[2px]">
+                  <ImageIcon size={32} className="mb-2" />
+                  <span className="text-xs font-bold uppercase tracking-widest">Change Image</span>
+                </div>
+              </>
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                <div className="p-4 bg-white rounded-2xl shadow-sm mb-3 group-hover:text-blue-500 group-hover:scale-110 transition-all">
+                  <Plus size={24} />
+                </div>
+                <p className="text-xs font-bold uppercase tracking-tighter">Click to select from Library</p>
+              </div>
+            )}
+          </div>
+
+          {/* Hidden/Manual URL Input */}
+          <div className="relative">
+            <input
+              name="image"
+              type="hidden"
+              value={selectedImage}
+              onChange={(e) => setSelectedImage(e.target.value)}
+              placeholder="https://example.com/image.jpg"
+              className={inputBase}
+            />
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-black text-gray-300 uppercase tracking-widest pointer-events-none">
+              Direct Link
+            </div>
+          </div>
         </div>
 
-        {/* Row 4: External Link Logic (The New Section) */}
+        {/* Row 4: External Link Logic */}
         <div className="p-5 bg-blue-50/30 rounded-2xl border border-blue-100/50 space-y-4">
           <h3 className="text-sm font-bold text-blue-900 flex items-center gap-2">
             <LinkIcon size={16} /> External Call-to-Action
@@ -212,6 +255,17 @@ export default function EventsForm({ event }) {
           )}
         </button>
       </form>
+
+      {/* Image Picker Modal Trigger */}
+      {showPicker && (
+        <ImagePicker 
+          onClose={() => setShowPicker(false)} 
+          onSelect={(url) => {
+            setSelectedImage(url);
+            setShowPicker(false);
+          }} 
+        />
+      )}
     </div>
   );
 }

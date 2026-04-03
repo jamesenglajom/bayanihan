@@ -38,7 +38,7 @@ export default async function Home() {
       <Events eventsList={events}/>
       <News />
       <Faqs faqsList={faqs}/>
-      <Growth />
+      {/* <Growth /> */}
       <Donate />
       <Contact />
       <Footer />

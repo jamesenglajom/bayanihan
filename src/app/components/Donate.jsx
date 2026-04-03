@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-
+const donate_link = "/donate";
+const volunteer_link = "#";
 function Donate() {
   return (
     <section className="w-full py-16 md:py-24 bg-white dark:bg-neutral-950 transition-colors duration-500">
@@ -62,12 +64,12 @@ function Donate() {
               transition={{ delay: 0.6 }}
               className="flex flex-wrap justify-center lg:justify-start gap-4 mt-2"
             >
-              <button className="px-8 py-4 bg-yellow-400 hover:bg-yellow-500 dark:bg-yellow-500 dark:hover:bg-yellow-600 text-neutral-900 font-bold rounded-full shadow-lg transition-all active:scale-95">
+              <Link href={donate_link} className="px-8 py-4 bg-yellow-400 hover:bg-yellow-500 dark:bg-yellow-500 dark:hover:bg-yellow-600 text-neutral-900 font-bold rounded-full shadow-lg transition-all active:scale-95">
                 Donate Now
-              </button>
-              <button className="px-8 py-4 border-2 border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-900 text-neutral-900 dark:text-neutral-100 font-bold rounded-full transition-all active:scale-95">
+              </Link>
+              <Link href={volunteer_link} className="px-8 py-4 border-2 border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-900 text-neutral-900 dark:text-neutral-100 font-bold rounded-full transition-all active:scale-95">
                 Volunteer
-              </button>
+              </Link>
             </motion.div>
           </motion.div>
 

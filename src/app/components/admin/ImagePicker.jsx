@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { X, Search, Image as ImageIcon, CheckCircle2, Loader2 } from 'lucide-react';
 import { loadPublicImages } from '@/app/lib/fn_server';
 
-export default function ImagePicker({ onSelect, onClose }) {
+export default function ImagePicker({ onSelect, onClose, source='/images/blogs' }) {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -12,7 +12,7 @@ export default function ImagePicker({ onSelect, onClose }) {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const data = await loadPublicImages('public/images/blogs');
+        const data = await loadPublicImages(`public${source}`);
         setImages(data || []);
       } catch (err) {
         console.error("Failed to load images", err);
@@ -80,14 +80,14 @@ export default function ImagePicker({ onSelect, onClose }) {
                 <button
                   key={img}
                   onClick={() => {
-                    onSelect(`/images/blogs/${img}`);
+                    onSelect(`${source}/${img}`);
                     onClose();
                   }}
                   className="group relative aspect-square rounded-3xl overflow-hidden border-4 border-transparent 
                              hover:border-indigo-600 hover:shadow-xl hover:shadow-indigo-100 active:scale-95 transition-all duration-300"
                 >
                   <Image
-                    src={`/images/blogs/${img}`}
+                    src={`${source}/${img}`}
                     alt={img}
                     fill
                     sizes="(max-width: 768px) 50vw, 20vw"

@@ -2,42 +2,9 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {redis} from "@/app/lib/upstash"
+import { getBlogs } from "@/app/lib/fn_server";
 import { Calendar, Clock, ArrowRight, ChevronLeft, ChevronRight, Share2 } from "lucide-react";
 export const dynamic = "force-dynamic";
-
-const getBlogs = async () => {
-  try {
-    // 1. Get the Index (Source of Truth) from environment variable key
-    const blogsKey = process.env.UPSTASH_KEY_BLOGS;
-    const blogIds = (await redis.get(blogsKey)) || [];
-
-    // 2. Guard: If no blogs exist, return empty array immediately
-    // This prevents calling mget with empty arguments which causes an error
-    if (!blogIds || blogIds.length === 0) {
-      return [];
-    }
-
-    // 3. Fetch all data in one efficient round-trip
-    const allBlogs = await redis.mget(...blogIds);
-
-    console.log("allBlogs", allBlogs);
-
-    // 4. Filter, Transform, and Sort
-    // filter(Boolean) removes nulls if an ID exists but the data was deleted
-    return allBlogs
-      .filter(Boolean)
-      .map(({ content, ...rest }) => ({
-        ...rest, 
-        // We omit the 'content' (Tiptap JSON) to keep the table payload light
-      }))
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-  } catch (error) {
-    console.error("Detailed Error Loading Blogs: ", error);
-    // Return a specific error object instead of just a string
-    return { error: true, message: "Could not synchronize with BES Cloud. Check Redis connection." };
-  }
-};
 
 
 export default async function page({ searchParams }) {

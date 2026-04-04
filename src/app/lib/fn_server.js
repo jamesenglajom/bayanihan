@@ -35,7 +35,8 @@ export const getBlogs = async () => {
         ...rest, 
         // We omit the 'content' (Tiptap JSON) to keep the table payload light
       }))
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      .filter(item => item?.published_at !== "")
+      .sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
 
   } catch (error) {
     console.error("Detailed Error Loading Blogs: ", error);

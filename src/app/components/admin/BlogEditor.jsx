@@ -120,7 +120,7 @@ const BlogEditor = ({ blog }) => {
       handle: post.handle || generateSlug(post.title),
       updated_at: entryDate,
       created_at: post.created_at || entryDate,
-      published_at: (post.published_at || entryDate).split("T")[0],
+      published_at: post?.published_at ? (post.published_at).split("T")[0] : "",
     };
 
     try {

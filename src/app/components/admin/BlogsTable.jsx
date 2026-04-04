@@ -32,7 +32,7 @@ const BlogsTable = ({ blogs = [] }) => {
   const currentItems = filteredBlogs.slice(
     startIndex,
     startIndex + itemsPerPage,
-  );
+  ).sort((a, b) => new Date(b.published_at) - new Date(a.published_at));;
 
   const goToNext = () => setCurrentPage((p) => Math.min(p + 1, totalPages));
   const goToPrev = () => setCurrentPage((p) => Math.max(p - 1, 1));
@@ -89,7 +89,7 @@ const BlogsTable = ({ blogs = [] }) => {
                 Author & Read
               </th>
               <th className="p-4 font-bold text-[10px] uppercase tracking-widest text-slate-400 w-40">
-                Timeline
+                Published
               </th>
               <th className="p-4 pr-8 text-right font-bold text-[10px] uppercase tracking-widest text-slate-400 w-32">
                 Action
@@ -170,8 +170,8 @@ const BlogsTable = ({ blogs = [] }) => {
                       size={14}
                       className="text-slate-400 flex-shrink-0"
                     />
-                    {blog?.created_at
-                      ? new Date(blog.created_at).toLocaleDateString()
+                    {blog?.published_at
+                      ? new Date(blog.published_at).toLocaleDateString()
                       : blog?.date || "N/A"}
                   </div>
                 </td>

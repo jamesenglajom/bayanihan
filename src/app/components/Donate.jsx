@@ -3,80 +3,158 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-const donate_link = "/donate";
-const volunteer_link = "#";
-function Donate() {
-  return (
-    <section className="w-full py-16 md:py-24 bg-white dark:bg-neutral-950 transition-colors duration-500">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-          
-          {/* Image Container with Reveal Animation */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full lg:w-1/2"
-          >
-            <div className="relative h-72 md:h-96 lg:h-[450px] w-full overflow-hidden rounded-3xl shadow-2xl dark:shadow-blue-900/10">
-              <Image
-                src="/banner/banner.png"
-                alt="Community Support"
-                className="object-cover transition-transform duration-700 hover:scale-105"
-                fill
-                priority
-              />
-              {/* Subtle Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
-            </div>
-          </motion.div>
 
-          {/* Text Content with Staggered Animation */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full lg:w-1/2 flex flex-col gap-6 md:gap-8 text-center lg:text-left"
-          >
-            <div className="space-y-4">
-              <motion.span 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest text-sm"
-              >
-                Support BES
-              </motion.span>
-              <h2 className="font-bold font-fraunces text-4xl md:text-5xl lg:text-6xl text-neutral-900 dark:text-neutral-100 leading-tight">
-                Be part of <br className="hidden md:block" /> something bigger
-              </h2>
-              <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto lg:mx-0">
-                Your support strengthens our community and keeps our traditions alive. 
-                Together, we can ensure the Filipino spirit thrives in Sweden.
-              </p>
-            </div>
+// --- GLOBAL CONTENT ---
+const CONTENT = {
+  tagline: "Support BES",
+  title: "Be part of something bigger",
+  description: "Your support strengthens our community and keeps our traditions alive. Together, we can ensure the Filipino spirit thrives in Sweden.",
+  donateLabel: "Donate Now",
+  volunteerLabel: "Volunteer",
+  image: "/banner/banner.png",
+  links: {
+    donate: "/donate",
+    volunteer: "#",
+  },
+  benefits: ["Community Support", "Cultural Preservation", "Youth Programs"]
+};
 
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-wrap justify-center lg:justify-start gap-4 mt-2"
-            >
-              <Link href={donate_link} className="px-8 py-4 bg-yellow-400 hover:bg-yellow-500 dark:bg-yellow-500 dark:hover:bg-yellow-600 text-neutral-900 font-bold rounded-full shadow-lg transition-all active:scale-95">
-                Donate Now
-              </Link>
-              <Link href={volunteer_link} className="px-8 py-4 border-2 border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-900 text-neutral-900 dark:text-neutral-100 font-bold rounded-full transition-all active:scale-95">
-                Volunteer
-              </Link>
-            </motion.div>
-          </motion.div>
+// --- UTILITY COMPONENTS ---
+const Badge = ({ children }) => (
+  <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-theme-red/10 text-theme-red border border-theme-red/20 mb-4">
+    {children}
+  </span>
+);
 
+const PrimaryBtn = ({ label, href }) => (
+  <Link href={href} className="inline-flex items-center gap-3 px-8 py-4 bg-theme-red text-white font-bold rounded-full hover:bg-theme-blue transition-colors">
+    {label}
+  </Link>
+);
+
+const SecondaryBtn = ({ label, href }) => (
+  <Link href={href} className="px-8 py-4 border-2 border-theme-blue text-theme-blue dark:text-theme-alice hover:bg-theme-blue/5 font-bold rounded-full transition-all active:scale-95 text-center">
+    {label}
+  </Link>
+);
+
+// --- VERSION 1: THE CLASSIC (ENHANCED) ---
+const Version1 = () => (
+  <section className="w-full py-20 bg-theme-alice dark:bg-theme-dark transition-colors">
+    <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
+      <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} className="w-full lg:w-1/2">
+        <div className="relative h-[400px] w-full rounded-3xl overflow-hidden shadow-2xl">
+          <Image src={CONTENT.image} alt="Hero" fill className="object-cover" />
+        </div>
+      </motion.div>
+      <div className="w-full lg:w-1/2 text-center lg:text-left">
+        {/* <Badge>{CONTENT.tagline}</Badge> */}
+        <div className="inline-flex items-center gap-4 mb-8">
+          <span className="text-theme-red font-black uppercase tracking-[0.3em] text-sm">
+            {CONTENT.tagline}
+          </span>
+          <div className="h-[2px] w-8 md:w-16 bg-theme-red" />
+        </div>
+        <h2 className="font-clarendon text-4xl md:text-6xl font-bold text-theme-dark dark:text-theme-alice mb-6 leading-tight">{CONTENT.title}</h2>
+        <p className="text-lg text-theme-dark/70 dark:text-theme-alice/70 mb-8 max-w-xl">{CONTENT.description}</p>
+        <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+          <PrimaryBtn label={CONTENT.donateLabel} href={CONTENT.links.donate} />
+          <SecondaryBtn label={CONTENT.volunteerLabel} href={CONTENT.links.volunteer} />
         </div>
       </div>
-    </section>
+    </div>
+  </section>
+);
+
+// --- VERSION 2: THE "CREAM" FLOATING CARD ---
+const Version2 = () => (
+  <section className="w-full py-20 bg-white dark:bg-neutral-900">
+    <div className="container mx-auto px-6">
+      <div className="bg-theme-cream dark:bg-theme-dark rounded-3xl p-8 md:p-16 flex flex-col lg:flex-row-reverse items-center gap-12 border border-theme-yellow/20">
+        <div className="w-full lg:w-1/2 relative h-[350px] rounded-3xl overflow-hidden border-4 border-white dark:border-theme-blue/20">
+          <Image src={CONTENT.image} alt="Hero" fill className="object-cover" />
+        </div>
+        <div className="w-full lg:w-1/2">
+          <h2 className="text-4xl font-bold text-theme-blue mb-4">{CONTENT.title}</h2>
+          <p className="text-theme-dark/80 dark:text-theme-alice/80 mb-8 text-lg leading-relaxed">{CONTENT.description}</p>
+          <div className="flex gap-4">
+            <Link href={CONTENT.links.donate} className="px-8 py-3 bg-theme-blue text-white rounded-full font-bold">Get Involved</Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+// --- VERSION 3: MODERN MINIMALIST (SPLIT) ---
+const Version3 = () => (
+  <section className="w-full grid grid-cols-1 lg:grid-cols-2 min-h-[600px] bg-theme-alice dark:bg-theme-dark">
+    <div className="relative h-full min-h-[300px]">
+      <Image src={CONTENT.image} alt="Hero" fill className="object-cover" />
+    </div>
+    <div className="flex items-center justify-center p-8 md:p-20">
+      <div className="max-w-md">
+        <div className="w-12 h-1.5 bg-theme-red mb-6" />
+        <h2 className="text-5xl font-bold text-theme-dark dark:text-theme-alice mb-6">{CONTENT.title}</h2>
+        <p className="text-theme-dark/60 dark:text-theme-alice/60 mb-10">{CONTENT.description}</p>
+        <PrimaryBtn label={CONTENT.donateLabel} href={CONTENT.links.donate} />
+      </div>
+    </div>
+  </section>
+);
+
+// --- VERSION 4: THE TRUST BUILDER (BLUE & YELLOW) ---
+const Version4 = () => (
+  <section className="w-full py-24 bg-theme-blue text-theme-alice">
+    <div className="container mx-auto px-6 text-center">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold mb-8">{CONTENT.title}</h2>
+        <div className="relative w-full h-[300px] mb-12 rounded-3xl overflow-hidden border-8 border-theme-yellow">
+           <Image src={CONTENT.image} alt="Hero" fill className="object-cover" />
+        </div>
+        <p className="text-xl opacity-90 mb-10">{CONTENT.description}</p>
+        <Link href={CONTENT.links.donate} className="px-12 py-5 bg-theme-yellow text-theme-dark font-black rounded-full text-xl hover:scale-105 transition-transform inline-block">
+          {CONTENT.donateLabel}
+        </Link>
+      </div>
+    </div>
+  </section>
+);
+
+// --- VERSION 5: BENTO GRID STYLE ---
+const Version5 = () => (
+  <section className="w-full py-20 bg-theme-alice dark:bg-theme-dark">
+    <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-6">
+      <div className="md:col-span-8 bg-white dark:bg-neutral-800 p-10 rounded-3xl shadow-sm border border-theme-alice/50">
+        <Badge>{CONTENT.tagline}</Badge>
+        <h2 className="text-4xl font-bold text-theme-dark dark:text-theme-alice mb-4">{CONTENT.title}</h2>
+        <p className="text-theme-dark/70 dark:text-theme-alice/70 text-lg mb-6">{CONTENT.description}</p>
+        <div className="flex gap-4">
+          <PrimaryBtn label={CONTENT.donateLabel} href={CONTENT.links.donate} />
+        </div>
+      </div>
+      <div className="md:col-span-4 relative rounded-3xl overflow-hidden min-h-[300px] shadow-xl">
+        <Image src={CONTENT.image} alt="Hero" fill className="object-cover" />
+      </div>
+      {CONTENT.benefits.map((b, i) => (
+        <div key={i} className="md:col-span-4 bg-theme-yellow/10 border border-theme-yellow/20 p-6 rounded-3xl text-center">
+          <p className="font-bold text-theme-dark dark:text-theme-yellow">{b}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+// --- MAIN COMPONENT STACK ---
+export default function DonateSections() {
+  return (
+    <div className="flex flex-col gap-0 overflow-x-hidden">
+      <Version1 />
+      {/* <Version2 /> */}
+      {/* <Version3 /> */}
+      {/* <Version4 /> */}
+      {/* <Version5 /> */}
+      
+    </div>
   );
 }
-
-export default Donate;

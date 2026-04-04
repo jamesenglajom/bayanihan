@@ -1,10 +1,14 @@
+@import url("https://use.typekit.net/vkg0ejp.css");
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
 
 @theme {
   /* This creates a 'bg-hero' utility */
   --background-image-hero: url('/banner/banner.png');
- 
+  --font-clarendon: "clarendon-text-pro", serif;
+  --font-clarendon: "clarendon-text-pro", serif;
+  /* --font-sans: "clarendon-text-pro"; */
   --color-theme-dark: #192330;
   --color-theme-red: #C62127;
   --color-theme-blue: #3E639B;
@@ -13,6 +17,8 @@
   --color-theme-alice:#f0f4f8;
   --font-poppins: var(--font-poppins);
   --font-fraunces: var(--font-fraunces);
+  --font-clarendon: "clarendon-text-pro", serif;
+  /* --font-sans: "clarendon-text-pro", serif; */
 }
 
 @layer utilities {
@@ -21,6 +27,9 @@
   }
   .font-fraunces {
     font-family: var(--font-fraunces);
+  }
+  .font-clarendon {
+    font-family: var(--font-clarendon);
   }
 }
 

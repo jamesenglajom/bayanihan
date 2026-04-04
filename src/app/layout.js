@@ -27,6 +27,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://use.typekit.net/vkg0ejp.css" />
+      </head>
       <body
         className={`${poppins.variable} ${fraunces.variable} antialiased`}
       >

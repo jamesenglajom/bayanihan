@@ -9,22 +9,22 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { url: "home", name: "Home" },
-    { url: "about", name: "About" },
-    { url: "events", name: "Events" },
-    { url: "news", name: "News" },
-    { url: "faqs", name: "FAQs" },
+    { url: "/", name: "Home" },
+    { url: "#about", name: "About" },
+    { url: "#events", name: "Events" },
+    { url: "#news", name: "News" },
+    { url: "#FAQS", name: "FAQs" },
   ];
 
   const activeSection = useActiveSection(navItems.map(link => link.url));
 
   return (
-    <nav className="w-full sticky top-0 z-50 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 transition-colors">
+    <nav className="w-full sticky top-0 z-50 bg-white dark:bg-[#151d27] border-b border-neutral-200 dark:border-neutral-800 transition-colors">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-20">
           
           {/* Logo Section - flex-shrink-0 prevents shrinking */}
-          <Link href="#home" className="relative h-12 w-40 flex-shrink-0">
+          <Link href="/" className="relative h-12 w-40 flex-shrink-0">
             <Image
               src="/logo/KAY_bes_word_light01pngx4.png"
               alt="BES Logo"
@@ -46,7 +46,7 @@ function Navbar() {
             {navItems.map(item => (
               <Link 
                 key={`nav-item-${item.url}`} 
-                href={`#${item.url}`} 
+                href={`${item.url}`} 
                 className={`relative py-2 font-semibold transition-colors hover:text-blue-600 dark:hover:text-blue-400
                   ${activeSection === item.url 
                     ? "text-blue-600 dark:text-blue-400" 
@@ -65,9 +65,9 @@ function Navbar() {
           <div className="hidden lg:block">
             <Link 
               href="#contact" 
-              className="px-6 py-2.5 bg-yellow-400 dark:bg-yellow-500 text-neutral-900 font-bold rounded-full hover:bg-yellow-500 dark:hover:bg-yellow-600 transition-all whitespace-nowrap flex-shrink-0"
+              className="bg-theme-yellow hover:bg-theme-red text-theme-dark hover:text-white px-12 py-5 rounded-xl font-black shadow-xl hover:shadow-theme-red/20 transition-all active:scale-95 uppercase text-sm tracking-widest"
             >
-              Contact Us
+              Join Us
             </Link>
           </div>
 

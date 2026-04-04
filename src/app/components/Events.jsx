@@ -205,7 +205,7 @@ const Version4 = ({ events }) => {
             {events.slice(0, 5).map((event, i) => (
               <img
                 key={i}
-                src={event.image || "/api/placeholder/400/500"} 
+                src={event?.image || "/logo/KAY_bes_emblem_light02pngx2.png"} 
                 alt={event.name}
                 className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out ${
                   hoveredIndex === i 

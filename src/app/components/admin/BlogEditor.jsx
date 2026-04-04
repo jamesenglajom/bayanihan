@@ -79,11 +79,53 @@ const BlogEditor = ({ blog }) => {
   });
 
   const handleSave = async () => {
-    if (!post.title.trim()) return;
+    if (!post.title.trim()) {
+      alert("Please enter a title before saving.");
+      return;
+    }
+
     setIsSaving(true);
-    // Your actual API call would go here
-    // e.g., await fetch('/api/blogs', { method: 'POST', body: JSON.stringify(post) })
-    setTimeout(() => setIsSaving(false), 1200);
+    const contentText = editor.getText();
+    const finalReadDuration =
+      post.read_duration || `${calculateReadTime(contentText)} min read`;
+
+    // Construct the final payload
+    const data = {
+      ...post,
+      id: post.id || `${generateId()}`, // Use existing ID or generate new one
+      content: editor.getJSON(),
+      read_duration: finalReadDuration,
+      handle: post.handle || generateSlug(post.title),
+      updated_at: new Date().toISOString(),
+      created_at: post.created_at || new Date().toISOString(),
+    };
+
+    try {
+      const response = await fetch("/api/blogs", {
+        method: blog ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to save blog");
+      }
+
+      const result = await response.json();
+      console.log("Success:", result);
+
+      // Success feedback
+      alert("Blog synchronized successfully with BES Cloud!");
+
+      // Optional: Redirect to the table view after saving
+      // router.push("/admin/blogs");
+    } catch (error) {
+      console.error("Save Error:", error);
+      alert(`Error: ${error.message}`);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleImageSelect = (url) => {
@@ -93,7 +135,7 @@ const BlogEditor = ({ blog }) => {
   };
 
   // Logic for dynamic live preview URL
-  const liveUrl = `/blog/${post.handle || post.id}`;
+  const liveUrl = post?.handle ? `/blogs/${post.handle}`:"#";
   
   const labelStyle = "text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2 mb-2 px-1";
   const inputStyle = "w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-3.5 text-sm font-bold text-slate-900 focus:bg-white focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-400 transition-all outline-none placeholder:text-slate-300 shadow-inner-sm";

@@ -66,10 +66,15 @@ export default function EventsForm({ event }) {
     }
   }
 
+  const removeImage = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setSelectedImage("")
+  }
   // Senior UI Design System Constants
   const inputBase = "w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-200 text-gray-700 placeholder:text-gray-400";
   const labelBase = "flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5 ml-1";
-
+  
   return (
     <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
       {/* Header */}
@@ -152,6 +157,10 @@ export default function EventsForm({ event }) {
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white backdrop-blur-[2px]">
                   <ImageIcon size={32} className="mb-2" />
                   <span className="text-xs font-bold uppercase tracking-widest">Change Image</span>
+                  <button onClick={removeImage}
+                  disabled={selectedImage === ""}
+                  title="Remove Image"
+                  className="bg-red-700 transition-colors flex mt-5 w-[30px] h-[30px] items-center justify-center rounded-sm cursor-pointer disabled:pointer-events-none disabled:bg-red-700/15">X</button>
                 </div>
               </>
             ) : (
@@ -259,6 +268,7 @@ export default function EventsForm({ event }) {
       {/* Image Picker Modal Trigger */}
       {showPicker && (
         <ImagePicker 
+          source="/images/events"
           onClose={() => setShowPicker(false)} 
           onSelect={(url) => {
             setSelectedImage(url);

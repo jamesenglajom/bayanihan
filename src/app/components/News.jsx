@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import SiteSectionHeader from "./SiteSectionHeader";
@@ -174,21 +174,21 @@ const Version4Bento = () => (
  * VERSION 5: EDITORIAL STRIP (The High-End Magazine Look)
  * Uses the Cream and Red accents for a premium feel.
  */
-const Version5Editorial = () => (
+const Version5Editorial = ({blogs}) => (
     <div className="space-y-12">
-        {DATA.newsList.map((news, i) => (
+        {blogs.map((blog_news, i) => (
             <motion.div key={i} variants={FADE_UP} className={`flex flex-col ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center`}>
                 <div className="w-full md:w-1/2 overflow-hidden rounded-3xl">
-                    <img src={news.image} className="w-full aspect-video object-cover hover:scale-110 transition-all duration-1000 rounded-3xl" alt="" />
+                    <img src={blog_news.main_image} className="w-full aspect-video object-cover hover:scale-110 transition-all duration-1000 rounded-3xl" alt="" />
                 </div>
                 <div className="w-full md:w-1/2 space-y-4">
                     <div className="flex items-center gap-2">
                         <div className="h-[1px] w-12 bg-theme-red"></div>
-                        <span className="text-theme-red font-bold text-xs uppercase tracking-widest">{news.badge}</span>
+                        <span className="text-theme-red font-bold text-xs uppercase tracking-widest">{blog_news.badge}</span>
                     </div>
-                    <h3 className="text-4xl font-clarendon text-theme-dark dark:text-theme-alice">{news.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3">{news.excerpt}</p>
-                    <Link href={news?.handle ?`/blogs/${news.handle}` : "#"} className="border-b-2 border-theme-dark dark:border-theme-yellow pb-1 font-bold text-theme-dark dark:text-theme-yellow hover:text-theme-red transition-colors">
+                    <h3 className="text-4xl font-clarendon text-theme-dark dark:text-theme-alice">{blog_news.title}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3">{blog_news.excerpt}</p>
+                    <Link href={blog_news?.handle ?`/blogs/${blog_news.handle}` : "#"} className="border-b-2 border-theme-dark dark:border-theme-yellow pb-1 font-bold text-theme-dark dark:text-theme-yellow hover:text-theme-red transition-colors">
                         Discover Story
                     </Link>
                 </div>
@@ -202,7 +202,11 @@ const Version5Editorial = () => (
  * MAIN COMPONENT WRAPPER
  * Comment/Uncomment the Versions inside the render to toggle.
  */
-function News() {
+function News({blogs}) {
+  const newsBlogs = useMemo(()=>{
+    if(!blogs) return [];
+    return blogs.filter(({categories})=> categories.map(i=> i.toLowerCase()).includes("news"))
+  },[blogs])
   return (
     <section id="news" className="w-full py-20 bg-theme-alice dark:bg-theme-dark transition-colors duration-500 overflow-hidden">
       <div className="container mx-auto px-6">
@@ -218,15 +222,15 @@ function News() {
           {/* <Version2Spotlight /> */}
           {/* <Version3List /> */}
           {/* <Version4Bento /> */}
-          <Version5Editorial />
+          <Version5Editorial blogs={newsBlogs}/>
 
         </motion.div>
 
         {/* FOOTER CTA */}
         <div className="flex justify-center mt-20">
-          <button className="bg-theme-yellow hover:bg-theme-red text-theme-dark hover:text-white px-12 py-5 rounded-xl font-black shadow-xl hover:shadow-theme-red/20 transition-all active:scale-95 uppercase text-sm tracking-widest">
-            Explore All Announcements
-          </button>
+          <Link href="/blogs" className="bg-theme-yellow hover:bg-theme-red text-theme-dark hover:text-white px-12 py-5 rounded-xl font-black shadow-xl hover:shadow-theme-red/20 transition-all active:scale-95 uppercase text-sm tracking-widest">
+            Explore
+          </Link>
         </div>
       </div>
     </section>

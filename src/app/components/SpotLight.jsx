@@ -11,7 +11,7 @@ const SPOTLIGHT_DATA = {
   brand: "MERKADOPH",
   quote: "This Association gave me back my roots and people. I found family here.",
   highlight: "roots",
-  image: "/banner/banner.png",
+  image: "/images/spotlight/kay_alvefelt.webp",
 };
 
 // --- VERSION 1: THE REFINED CLASSIC (Enhanced Original) ---

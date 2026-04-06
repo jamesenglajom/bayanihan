@@ -2,7 +2,7 @@ import AdminTemplate from "@/app/components/admin/AdminTemplate";
 // import "./admin.css";
 
 export const metadata = {
-  title: "Blogs",
+  title: "Blogs Page",
 };
 
 export default function RootLayout({ children }) {

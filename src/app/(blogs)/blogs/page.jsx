@@ -11,67 +11,71 @@ import {
 } from "lucide-react";
 import { getCachedBlogs } from "@/app/lib/fn_server";
 // --- GLOBAL MOCK DATA (Simulating your getCachedBlogs logic) ---
-const BLOG_DATA = {
-  featured: {
-    handle: "future-of-ui-design",
-    title: "The Renaissance of Minimalism in Digital Interfaces",
-    excerpt:
-      "Exploring how the shift back to clean lines and purposeful whitespace is redefining user experience in the high-end luxury sector.",
-    main_image: "/banner/banner.png",
-    author: "Julian Thorne",
-    category: "Design Trends",
-    read_duration: "8 min read",
-  },
-  posts: [
-    {
-      id: 1,
-      handle: "b1",
-      title: "Why Typography is the Soul of Branding",
-      category: "Branding",
-      read_duration: "5 min",
-      main_image: "/banner/banner.png",
-    },
-    {
-      id: 2,
-      handle: "b2",
-      title: "Mastering the Dark Mode Aesthetic",
-      category: "Development",
-      read_duration: "4 min",
-      main_image: "/banner/banner.png",
-    },
-    {
-      id: 3,
-      handle: "b3",
-      title: "The Psychology of Color in E-commerce",
-      category: "UX Research",
-      read_duration: "6 min",
-      main_image: "/banner/banner.png",
-    },
-    {
-      id: 4,
-      handle: "b4",
-      title: "Next.js 15: What You Need to Know",
-      category: "Tech",
-      read_duration: "10 min",
-      main_image: "/banner/banner.png",
-    },
-    {
-      id: 5,
-      handle: "b5",
-      title: "Architecting Scalable Design Systems",
-      category: "Architecture",
-      read_duration: "12 min",
-      main_image: "/banner/banner.png",
-    },
-    {
-      id: 6,
-      handle: "b6",
-      title: "The Rise of Motion Design in 2026",
-      category: "Motion",
-      read_duration: "7 min",
-      main_image: "/banner/banner.png",
-    },
-  ],
+// const BLOG_DATA = {
+//   featured: {
+//     handle: "future-of-ui-design",
+//     title: "The Renaissance of Minimalism in Digital Interfaces",
+//     excerpt:
+//       "Exploring how the shift back to clean lines and purposeful whitespace is redefining user experience in the high-end luxury sector.",
+//     main_image: "/banner/banner.png",
+//     author: "Julian Thorne",
+//     category: "Design Trends",
+//     read_duration: "8 min read",
+//   },
+//   posts: [
+//     {
+//       id: 1,
+//       handle: "b1",
+//       title: "Why Typography is the Soul of Branding",
+//       category: "Branding",
+//       read_duration: "5 min",
+//       main_image: "/banner/banner.png",
+//     },
+//     {
+//       id: 2,
+//       handle: "b2",
+//       title: "Mastering the Dark Mode Aesthetic",
+//       category: "Development",
+//       read_duration: "4 min",
+//       main_image: "/banner/banner.png",
+//     },
+//     {
+//       id: 3,
+//       handle: "b3",
+//       title: "The Psychology of Color in E-commerce",
+//       category: "UX Research",
+//       read_duration: "6 min",
+//       main_image: "/banner/banner.png",
+//     },
+//     {
+//       id: 4,
+//       handle: "b4",
+//       title: "Next.js 15: What You Need to Know",
+//       category: "Tech",
+//       read_duration: "10 min",
+//       main_image: "/banner/banner.png",
+//     },
+//     {
+//       id: 5,
+//       handle: "b5",
+//       title: "Architecting Scalable Design Systems",
+//       category: "Architecture",
+//       read_duration: "12 min",
+//       main_image: "/banner/banner.png",
+//     },
+//     {
+//       id: 6,
+//       handle: "b6",
+//       title: "The Rise of Motion Design in 2026",
+//       category: "Motion",
+//       read_duration: "7 min",
+//       main_image: "/banner/banner.png",
+//     },
+//   ],
+// };
+
+export const metadata = {
+  title: "BES Stories",
 };
 
 export default async function BlogsPage({ searchParams }) {

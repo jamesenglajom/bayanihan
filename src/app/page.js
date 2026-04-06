@@ -19,15 +19,24 @@ import Leaders from "@/app/components/Leaders";
 import Footer from "@/app/components/Footer";
 
 
-export default async function Home() {
-  const faqs = await getFAQs();
-  const rawEvents = await redis.zrange(process.env.UPSTASH_KEY_EVENTS, 0, -1, { rev: true });
-  const events = rawEvents
-  .map((item) => (typeof item === 'string' ? JSON.parse(item) : item))
-  // Sort descending: Newest Date first
-  .sort((a, b) => new Date(b.date) - new Date(a.date));
-  const blogs = await getCachedBlogs();
+// 1. Add the ISR revalidation period (in seconds)
+// 3600 = 1 hour, 60 = 1 minute. Choose based on how often events/blogs update.
+export const revalidate = 60; 
 
+export default async function Home() {
+  // 2. Wrap your fetches in a Promise.all for parallel performance
+  // This is a "Senior Dev" pattern that loads all data simultaneously 
+  // instead of one after the other (Waterfall).
+  const [faqs, blogs, rawEvents] = await Promise.all([
+    getFAQs(),
+    getCachedBlogs(),
+    redis.zrange(process.env.UPSTASH_KEY_EVENTS || "", 0, -1, { rev: true })
+  ]);
+
+  // 3. Process the events
+  const events = (rawEvents || [])
+    .map((item) => (typeof item === 'string' ? JSON.parse(item) : item))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
     <div className="relative">
@@ -40,7 +49,6 @@ export default async function Home() {
       <Events eventsList={events}/>
       <News blogs={blogs}/>
       <Faqs faqsList={faqs}/>
-      {/* <Growth /> */}
       <Donate />
       <Contact />
       <Footer />

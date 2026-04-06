@@ -1,8 +1,8 @@
 
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 import { redis, getFAQs } from "@/app/lib/upstash";
-import { getBlogs } from "./lib/fn_server";
+import { getCachedBlogs } from "./lib/fn_server";
 
 import Navbar from "@/app/components/Navbar";
 import Banner from "@/app/components/Banner";
@@ -26,7 +26,7 @@ export default async function Home() {
   .map((item) => (typeof item === 'string' ? JSON.parse(item) : item))
   // Sort descending: Newest Date first
   .sort((a, b) => new Date(b.date) - new Date(a.date));
-  const blogs = await getBlogs();
+  const blogs = await getCachedBlogs();
 
 
   return (

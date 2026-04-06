@@ -299,6 +299,7 @@ function News({ blogs }) {
       .filter(({ categories }) =>
         categories.map((i) => i.toLowerCase()).includes("news"),
       )
+      .filter(({published_at}) => published_at !== "")
       .sort((a, b) => {// Convert ISO strings to timestamps
         const dateA = new Date(a.published_at).getTime();
         const dateB = new Date(b.published_at).getTime();

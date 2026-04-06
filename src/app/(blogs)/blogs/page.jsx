@@ -9,8 +9,8 @@ import {
   User,
   Bookmark,
 } from "lucide-react";
-import { getBlogs } from "@/app/lib/fn_server";
-// --- GLOBAL MOCK DATA (Simulating your getBlogs logic) ---
+import { getCachedBlogs } from "@/app/lib/fn_server";
+// --- GLOBAL MOCK DATA (Simulating your getCachedBlogs logic) ---
 const BLOG_DATA = {
   featured: {
     handle: "future-of-ui-design",
@@ -76,7 +76,8 @@ const BLOG_DATA = {
 
 export default async function BlogsPage({ searchParams }) {
   // 1. Fetch all data
-  const allBlogs = (await getBlogs()) || [];
+  const allBlogs = ((await getCachedBlogs()) || [])
+  .filter(({published_at}) => published_at !== "");
 
   // 2. Pagination Configuration
   const postsPerPage = 6;

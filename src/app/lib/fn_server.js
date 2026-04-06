@@ -1,6 +1,7 @@
 'use server'
 import fs from 'fs';
 import path from 'path';
+import { unstable_cache } from 'next/cache';
 import { redis } from "@/app/lib/upstash";
 import { generateHTML } from "@tiptap/html";
 import Image from "@tiptap/extension-image";
@@ -8,8 +9,15 @@ import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 
-
 // BLOGS
+export const getCachedBlogs = unstable_cache(
+  async () => {
+    return await getBlogs();
+  },
+  ['blogs-list'], // Cache key
+  { revalidate: 60, tags: ['blogs'] } // Revalidate every minute
+);
+
 export const getBlogs = async () => {
   try {
     // 1. Get the Index (Source of Truth) from environment variable key
@@ -35,7 +43,6 @@ export const getBlogs = async () => {
         ...rest, 
         // We omit the 'content' (Tiptap JSON) to keep the table payload light
       }))
-      .filter(item => item?.published_at !== "")
       .sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
 
   } catch (error) {

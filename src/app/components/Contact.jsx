@@ -35,13 +35,13 @@ const CONTENT = {
       value: process.env.NEXT_PUBLIC_CONTACT_EMAIL, // Using placeholder for demo
       colorClass: "bg-theme-blue/10 text-theme-blue",
     },
-    {
-      icon: <Phone className="w-6 h-6" />,
-      name: "Phone",
-      message: "Call us anytime",
-      value: process.env.NEXT_PUBLIC_CONTACT_NUMBER,
-      colorClass: "bg-theme-red/10 text-theme-red",
-    },
+    // {
+    //   icon: <Phone className="w-6 h-6" />,
+    //   name: "Phone",
+    //   message: "Call us anytime",
+    //   value: process.env.NEXT_PUBLIC_CONTACT_NUMBER,
+    //   colorClass: "bg-theme-red/10 text-theme-red",
+    // },
   ],
 };
 

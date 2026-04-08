@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   ExternalLink,
   CheckCircle, // Added the missing import here
+  Info
 } from "lucide-react";
 import swishQrcodeSvg from "swish-qrcode-svg";
 
@@ -67,7 +68,6 @@ export default function DonatePage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-6 py-12 md:py-24 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-        
         {/* Left Column: Content */}
         <div className="lg:col-span-7 space-y-10">
           <div className="space-y-6">
@@ -95,17 +95,35 @@ export default function DonatePage() {
               emergency aid for those in need. Every krona builds a stronger
               bridge.
             </p>
+
+            <div className="py-4 px-5 rounded-2xl bg-blue-100 shadow-xl flex flex-col gap-6  border-l-5 border-indigo-500">
+              <div className="flex gap-2 text-indigo-500"><Info size={24} className="text-indigo-500" /><b>Information</b></div>
+              <p className="text-neutral-600">
+                All contributions to BES are currently being received through
+                the Swish account of our Treasurer, <b className="text-indigo-500">Geronimo Rariza</b>, while we
+                await the activation of our <b>official BES bank account</b>.
+              </p>
+              <p className="text-neutral-600">
+                This is a <b>temporary measure approved by the Board</b> to ensure
+                smooth operations and proper tracking of all incoming funds.
+                Rest assured, every transaction is recorded, acknowledged, and
+                fully accounted for in our financial reports.
+              </p>
+              <p className="italic text-neutral-500">
+                — Board of Directors, BES
+              </p>
+            </div>
           </div>
 
           {/* Verification Badges */}
           <div className="flex flex-wrap gap-4 pt-4">
             <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm font-medium">
-                <CheckCircle size={16} className="text-emerald-500" />
-                <span>Swedish Org. Registered</span>
+              <CheckCircle size={16} className="text-emerald-500" />
+              <span>Swedish Org. Registered</span>
             </div>
             <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm font-medium">
-                <CheckCircle size={16} className="text-emerald-500" />
-                <span>Secure Payments</span>
+              <CheckCircle size={16} className="text-emerald-500" />
+              <span>Secure Payments</span>
             </div>
           </div>
         </div>
@@ -141,18 +159,20 @@ export default function DonatePage() {
 
               {/* Mobile "Deep Link" Button (Visible on Mobile Only) */}
               <div className="md:hidden mb-8">
-                <a 
-                  href={swishUrl} 
+                <a
+                  href={swishUrl}
                   className="flex flex-col items-center justify-center gap-3 w-full py-8 rounded-3xl bg-indigo-600 text-white shadow-xl shadow-indigo-500/30 active:scale-95 transition-all"
                 >
                   <ExternalLink size={28} />
-                  <span className="font-black text-sm uppercase tracking-widest">Open Swish App</span>
+                  <span className="font-black text-sm uppercase tracking-widest">
+                    Open Swish App
+                  </span>
                 </a>
               </div>
 
               <div className="text-center space-y-4">
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
-                   {svgString ? "Scan to Donate" : "Manual Entry"}
+                  {svgString ? "Scan to Donate" : "Manual Entry"}
                 </p>
                 <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter">
                   {swishHRCode}

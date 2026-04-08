@@ -62,3 +62,12 @@ html {
   margin-bottom: 0.5rem;
   line-height: 1.6;
 }
+
+.faq-answer a {
+  text-decoration: underline;
+  color: #3E639B;
+}
+
+.faq-answer a:hover {
+  color: #192330;
+}

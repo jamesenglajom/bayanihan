@@ -18,7 +18,6 @@ import Growth from "@/app/components/Growth";
 import Leaders from "@/app/components/Leaders";
 import Footer from "@/app/components/Footer";
 
-
 // 1. Add the ISR revalidation period (in seconds)
 // 3600 = 1 hour, 60 = 1 minute. Choose based on how often events/blogs update.
 export const revalidate = 60; 
@@ -44,7 +43,7 @@ export default async function Home() {
       <Banner />
       <WhatWeDo />
       <OurStory />
-      <SpotLight />
+      {/* <SpotLight /> */}
       <Leaders />
       <Events eventsList={events}/>
       <News blogs={blogs}/>

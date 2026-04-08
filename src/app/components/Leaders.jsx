@@ -57,11 +57,11 @@ const team = [
     </p>
   </div>
     `,
-    mainImage: "/images/leaders/lorraine-1.webp",
+    mainImage: "/images/leaders/lorraine-4.webp",
     gallery: [
       "/images/leaders/lorraine-2.webp", 
       "/images/leaders/lorraine-3.webp", 
-      "/images/leaders/lorraine-4.webp",
+      "/images/leaders/lorraine-1.webp",
     ],
   },
   {

@@ -249,7 +249,7 @@ const Version4Bento = () => (
  */
 const Version5Editorial = ({ blogs }) => (
   <div className="space-y-12">
-    {blogs.map((blog_news, i) => (
+    {blogs.slice(0,3).map((blog_news, i) => (
       <motion.div
         key={i}
         variants={FADE_UP}

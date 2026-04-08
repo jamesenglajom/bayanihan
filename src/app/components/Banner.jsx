@@ -154,11 +154,11 @@ const MinimalistHero = () => (
         </h2>
         
         <h1 className="font-clarendon  text-5xl md:text-8xl font-light text-theme-dark dark:text-white leading-none tracking-tight">
-          Simpler. <span className="font-bold text-theme-red">Stronger.</span> <br /> Together.
+          Culture. <span className="text-theme-red">Collaboration.</span> <br /> Community.
         </h1>
 
         <p className="text-neutral-600 dark:text-neutral-300 text-lg md:text-xl max-w-xl mx-auto pt-6 font-medium">
-          A platform dedicated to the empowerment of the Filipino diaspora in Scandinavia.
+          A platform dedicated to the empowerment of the Filipino diaspora in <span className="text-theme-red">Sweden</span>.
         </p>
 
         {/* Stats Row */}

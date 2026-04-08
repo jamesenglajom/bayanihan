@@ -42,7 +42,7 @@ const stagger = {
 function VersionModernBento() {
   const tagline = "Our Story";
   const title = "What We Do";
-  const description = "Preserving Filipino heritage in Sweden through community, leadership, and local partnerships.";
+  const description = "Bringing people together through community, culture and meaningful changes that create lasting connections and shared experiences.";
   return (
     <section className="py-20 px-6">
       <div className="max-w-7xl mx-auto">

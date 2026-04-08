@@ -22,9 +22,9 @@ const STORY_CONTENT = {
     },
   ],
   benefits: [
-    { label: "Respect for tradition and cultural pride", icon: "heritage", color: "text-theme-blue" },
-    { label: "Dedication to help our members", icon: "help", color: "text-theme-yellow" },
-    { label: "Commitment to a shared thriving future", icon: "future", color: "text-theme-red" },
+    { label: "Celebrate Filipino traditions and cultural pride", icon: "heritage", color: "text-theme-blue" },
+    { label: "Dedication to empower", icon: "help", color: "text-theme-yellow" },
+    { label: "Commitment to a stronger and connected community", icon: "future", color: "text-theme-red" },
   ],
   image: "/images/our-story/our-story.webp",
 };

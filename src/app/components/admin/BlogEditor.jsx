@@ -99,6 +99,25 @@ const BlogEditor = ({ blog }) => {
     },
   });
 
+  // Add these helper functions at the bottom of your file
+  const calculateReadTime = (text) => {
+    if (!text) return 0;
+    const wordsPerMinute = 225;
+    const words = text.trim().split(/\s+/).length;
+    return Math.ceil(words / wordsPerMinute);
+  };
+
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .replace(/[^\w ]+/g, "")
+      .replace(/ +/g, "-");
+  };
+
+  const generateId = () => {
+    return Math.random().toString(36).substr(2, 9);
+  };
+
   const handleSave = async () => {
     if (!post.title.trim()) {
       alert("Please enter a title before saving.");
@@ -120,7 +139,7 @@ const BlogEditor = ({ blog }) => {
       handle: post.handle || generateSlug(post.title),
       updated_at: entryDate,
       created_at: post.created_at || entryDate,
-      published_at: post?.published_at ? (post.published_at).split("T")[0] : "",
+      published_at: post?.published_at ? post.published_at.split("T")[0] : "",
     };
 
     try {
@@ -165,9 +184,9 @@ const BlogEditor = ({ blog }) => {
   const inputStyle =
     "w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-3.5 text-sm font-bold text-slate-900 focus:bg-white focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-400 transition-all outline-none placeholder:text-slate-300 shadow-inner-sm";
 
-  useEffect(()=>{
-    console.log("blog", blog)
-  },[blog])
+  useEffect(() => {
+    console.log("blog", blog);
+  }, [blog]);
   return (
     <div className="max-w-7xl mx-auto p-6 md:p-12 antialiased text-slate-900">
       {/* Top Navigation Bar */}

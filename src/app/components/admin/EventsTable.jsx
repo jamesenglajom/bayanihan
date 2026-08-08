@@ -26,7 +26,7 @@ const EventsTable = ({ events = [] }) => {
   const [sortOrder, setSortOrder] = useState("desc"); // 'asc', 'desc', or null
   const itemsPerPage = 10;
 
-  // --- SENIOR UIUX UTILITY: Status Calculation ---
+  // --- Status Calculation ---
   const getEventStatus = (dateString) => {
     const eventDate = new Date(dateString);
     const now = new Date();
@@ -39,8 +39,7 @@ const EventsTable = ({ events = [] }) => {
       return {
         label: "Today",
         time: "Starts today",
-        styles:
-          "bg-blue-50 text-blue-700 border-blue-100 ring-4 ring-blue-500/5",
+        styles: "bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20",
         icon: <Clock size={12} className="animate-pulse" />,
       };
     }
@@ -48,7 +47,7 @@ const EventsTable = ({ events = [] }) => {
       return {
         label: "Past Event",
         time: "Concluded",
-        styles: "bg-red-50 text-red-600 border-red-100 opacity-80",
+        styles: "bg-red-50 text-red-600 border-red-100 opacity-80 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20",
         icon: <CheckCircle2 size={12} />,
       };
     }
@@ -58,7 +57,7 @@ const EventsTable = ({ events = [] }) => {
         diffInDays > 1
           ? `${diffInDays} days left`
           : `${diffInHours} hours left`,
-      styles: "bg-emerald-50 text-emerald-700 border-emerald-100",
+      styles: "bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20",
       icon: <Timer size={12} />,
     };
   };
@@ -101,27 +100,27 @@ const EventsTable = ({ events = [] }) => {
   const getBadgeStyles = (badge) => {
     const b = badge?.toLowerCase() || "";
     if (b.includes("community"))
-      return "bg-indigo-50 text-indigo-700 border-indigo-100";
+      return "bg-indigo-50 text-indigo-700 border-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20";
     if (b.includes("social"))
-      return "bg-amber-50 text-amber-700 border-amber-100";
-    return "bg-slate-50 text-slate-600 border-slate-100";
+      return "bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20";
+    return "bg-slate-50 text-slate-600 border-slate-100 dark:bg-white/5 dark:text-slate-400 dark:border-slate-800";
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-4 md:p-8 antialiased text-slate-800 font-sans">
+    <div className="w-full max-w-7xl mx-auto antialiased text-slate-800 dark:text-slate-200">
       {/* Header & Actions */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">
+          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             Events
           </h2>
-          <p className="text-slate-500 mt-1 text-sm font-medium">
+          <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm font-medium">
             Manage your community schedule and event listings.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="relative hidden sm:block">
+          <div className="relative flex-1 sm:flex-none">
             <Search
               className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
               size={16}
@@ -131,34 +130,34 @@ const EventsTable = ({ events = [] }) => {
               placeholder="Search events..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500 outline-none transition-all w-64"
+              className="pl-10 pr-4 py-2.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all w-full sm:w-64"
             />
           </div>
           <Link
             href="/admin/events/add"
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-200 transition-all duration-300 active:scale-95 font-bold text-sm"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition-colors active:scale-95 font-bold text-sm whitespace-nowrap"
           >
-            <Plus size={18} /> Add Event
+            <Plus size={18} /> <span className="hidden sm:inline">Add Event</span>
           </Link>
         </div>
       </div>
 
       {/* Desktop Table View */}
-      <div className="hidden md:block overflow-hidden bg-white border border-slate-200 rounded-2xl shadow-sm">
+      <div className="hidden md:block overflow-hidden bg-white dark:bg-white/2 border border-slate-200 dark:border-slate-800/60 rounded-2xl">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50/50 border-b border-slate-200">
-              <th className="p-4 pl-8 font-bold text-[10px] uppercase tracking-widest text-slate-400 w-24">
+            <tr className="bg-slate-50/50 dark:bg-white/2 border-b border-slate-200 dark:border-slate-800/60">
+              <th className="p-4 pl-6 font-bold text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 w-20">
                 Media
               </th>
-              <th className="p-4 font-bold text-[10px] uppercase tracking-widest text-slate-400">
+              <th className="p-4 font-bold text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500">
                 Event Info
               </th>
-              <th className="p-4 font-bold text-[10px] uppercase tracking-widest text-slate-400 w-64">
+              <th className="p-4 font-bold text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 w-56">
                 Location
               </th>
               <th
-                className="p-4 font-bold text-[10px] uppercase tracking-widest text-slate-400 w-56 cursor-pointer hover:text-indigo-600 transition-colors group/sort"
+                className="p-4 font-bold text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 w-52 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors group/sort"
                 onClick={toggleSort}
               >
                 <div className="flex items-center gap-2">
@@ -175,21 +174,21 @@ const EventsTable = ({ events = [] }) => {
                   )}
                 </div>
               </th>
-              <th className="p-4 pr-8 text-right font-bold text-[10px] uppercase tracking-widest text-slate-400">
+              <th className="p-4 pr-6 text-right font-bold text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500">
                 Action
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
             {currentItems.map((event) => {
               const status = getEventStatus(event.date);
               return (
                 <tr
                   key={event.id}
-                  className="group hover:bg-slate-50/50 transition-all duration-200"
+                  className="group hover:bg-slate-50/50 dark:hover:bg-white/3 transition-colors duration-150"
                 >
-                  <td className="p-4 pl-8">
-                    <div className="relative h-12 w-12 rounded-xl overflow-hidden border border-slate-200 bg-slate-100 flex-shrink-0 shadow-sm">
+                  <td className="p-4 pl-6">
+                    <div className="relative h-11 w-11 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 shrink-0">
                       {event.image ? (
                         <Image
                           src={event.image}
@@ -199,11 +198,8 @@ const EventsTable = ({ events = [] }) => {
                           className="object-cover group-hover:scale-110 transition-transform duration-500"
                         />
                       ) : (
-                        <div className="flex flex-col items-center justify-center h-full bg-slate-200/40 text-slate-400">
+                        <div className="flex items-center justify-center h-full bg-slate-200/40 dark:bg-slate-800 text-slate-400 dark:text-slate-600">
                           <ImageIcon size={16} strokeWidth={1.5} />
-                          <span className="text-[7px] font-black mt-0.5 uppercase">
-                            No Image
-                          </span>
                         </div>
                       )}
                     </div>
@@ -211,10 +207,10 @@ const EventsTable = ({ events = [] }) => {
 
                   <td className="p-4">
                     <div className="flex flex-col">
-                      <span className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors truncate max-w-[300px]">
+                      <span className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors truncate max-w-[280px]">
                         {event.name}
                       </span>
-                      <div className="italic text-slate-500 text-xs line-clamp-1 mb-1">
+                      <div className="italic text-slate-500 dark:text-slate-400 text-xs line-clamp-1 mb-1 font-serif">
                         {event.description}
                       </div>
                       <div className="flex items-center gap-2">
@@ -227,24 +223,18 @@ const EventsTable = ({ events = [] }) => {
                     </div>
                   </td>
 
-                  <td className="p-4 text-slate-600 font-medium text-xs">
-                    <div className="flex items-start gap-2 max-w-[240px]">
-                      <MapPin
-                        size={14}
-                        className="text-slate-400 mt-0.5 flex-shrink-0"
-                      />
+                  <td className="p-4 text-slate-600 dark:text-slate-400 font-medium text-xs">
+                    <div className="flex items-start gap-2 max-w-[220px]">
+                      <MapPin size={14} className="text-slate-400 dark:text-slate-500 mt-0.5 shrink-0" />
                       <span className="truncate">{event.location}</span>
                     </div>
                   </td>
 
                   <td className="p-4">
                     <div className="flex flex-col gap-1.5">
-                      <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
-                        <Calendar
-                          size={14}
-                          className="text-indigo-400 flex-shrink-0"
-                        />
-                        {event.date}
+                      <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 font-mono">
+                        <Calendar size={14} className="text-indigo-400 shrink-0" />
+                        {new Date(event.date).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
                       </div>
                       <div className="flex items-center gap-2">
                         <span
@@ -252,17 +242,17 @@ const EventsTable = ({ events = [] }) => {
                         >
                           {status.icon} {status.label}
                         </span>
-                        <span className="text-[10px] font-bold text-slate-400 italic">
+                        <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 italic">
                           {status.time}
                         </span>
                       </div>
                     </div>
                   </td>
 
-                  <td className="p-4 pr-8 text-right">
+                  <td className="p-4 pr-6 text-right">
                     <Link
                       href={`/admin/events/update/${event.id}`}
-                      className="inline-flex items-center justify-center gap-2 px-4 py-2 text-xs font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-900 hover:text-white transition-all shadow-sm"
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2 text-xs font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-white/5 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-900 hover:text-white hover:border-slate-900 dark:hover:bg-indigo-600 dark:hover:border-indigo-600 transition-colors"
                     >
                       <Pencil size={14} /> Edit
                     </Link>
@@ -281,23 +271,15 @@ const EventsTable = ({ events = [] }) => {
           return (
             <div
               key={event.id}
-              className="p-5 bg-white border border-slate-200 rounded-2xl shadow-sm"
+              className="p-5 bg-white dark:bg-white/2 border border-slate-200 dark:border-slate-800/60 rounded-2xl"
             >
               <div className="flex items-center gap-4 mb-5">
-                <div className="relative h-16 w-16 rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 flex-shrink-0 shadow-sm">
+                <div className="relative h-16 w-16 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 shrink-0">
                   {event.image ? (
-                    <Image
-                      src={event.image}
-                      alt={event.name}
-                      fill
-                      className="object-cover"
-                    />
+                    <Image src={event.image} alt={event.name} fill className="object-cover" />
                   ) : (
-                    <div className="flex flex-col items-center justify-center h-full text-slate-300">
+                    <div className="flex flex-col items-center justify-center h-full text-slate-300 dark:text-slate-600">
                       <ImageIcon size={20} />
-                      <span className="text-[8px] font-bold mt-1 uppercase">
-                        No Image
-                      </span>
                     </div>
                   )}
                 </div>
@@ -307,23 +289,20 @@ const EventsTable = ({ events = [] }) => {
                   >
                     {event.badge || "Event"}
                   </div>
-                  <h3 className="font-bold text-slate-900 leading-tight truncate">
+                  <h3 className="font-bold text-slate-900 dark:text-white leading-tight truncate">
                     {event.name}
                   </h3>
                 </div>
               </div>
               <div className="space-y-4 mb-5">
-                <div className="flex items-start text-xs text-slate-500 font-medium gap-2.5">
-                  <MapPin size={16} className="flex-shrink-0 text-slate-400" />{" "}
+                <div className="flex items-start text-xs text-slate-500 dark:text-slate-400 font-medium gap-2.5">
+                  <MapPin size={16} className="shrink-0 text-slate-400 dark:text-slate-500" />{" "}
                   <span className="leading-snug">{event.location}</span>
                 </div>
-                <div className="flex flex-col gap-2 p-3 bg-slate-50 rounded-xl border border-slate-100">
-                  <div className="flex items-center text-xs text-slate-700 font-bold gap-2.5">
-                    <Calendar
-                      size={16}
-                      className="flex-shrink-0 text-indigo-400"
-                    />{" "}
-                    <span>{event.date}</span>
+                <div className="flex flex-col gap-2 p-3 bg-slate-50 dark:bg-white/3 rounded-xl border border-slate-100 dark:border-slate-800/60">
+                  <div className="flex items-center text-xs text-slate-700 dark:text-slate-300 font-bold gap-2.5 font-mono">
+                    <Calendar size={16} className="shrink-0 text-indigo-400" />{" "}
+                    <span>{new Date(event.date).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span
@@ -331,7 +310,7 @@ const EventsTable = ({ events = [] }) => {
                     >
                       {status.icon} {status.label}
                     </span>
-                    <span className="text-[10px] text-slate-400 font-bold italic">
+                    <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold italic">
                       {status.time}
                     </span>
                   </div>
@@ -339,7 +318,7 @@ const EventsTable = ({ events = [] }) => {
               </div>
               <Link
                 href={`/admin/events/update/${event.id}`}
-                className="w-full flex items-center justify-center gap-2 py-3 bg-slate-900 text-white text-xs font-bold rounded-xl shadow-lg active:scale-95 transition-all"
+                className="w-full flex items-center justify-center gap-2 py-3 bg-slate-900 dark:bg-indigo-600 text-white text-xs font-bold rounded-lg active:scale-95 transition-all"
               >
                 <Pencil size={14} /> Manage Event
               </Link>
@@ -348,38 +327,43 @@ const EventsTable = ({ events = [] }) => {
         })}
       </div>
 
-      {/* Pagination */}
-      <div className="mt-8 flex flex-col items-center gap-6 sm:flex-row sm:justify-between border-t border-slate-100 pt-8">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-          Showing <span className="text-slate-900">{startIndex + 1}</span> -{" "}
-          <span className="text-slate-900">
-            {Math.min(
-              startIndex + itemsPerPage,
-              filteredAndSortedEvents.length,
-            )}
-          </span>{" "}
-          of {filteredAndSortedEvents.length}
-        </p>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={goToPrev}
-            disabled={currentPage === 1}
-            className="flex items-center justify-center w-10 h-10 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-20 transition-all shadow-sm"
-          >
-            <ChevronLeft size={18} />
-          </button>
-          <div className="flex items-center px-5 h-10 bg-slate-900 rounded-xl text-white font-bold text-xs tracking-tighter">
-            {currentPage} / {totalPages}
-          </div>
-          <button
-            onClick={goToNext}
-            disabled={currentPage === totalPages}
-            className="flex items-center justify-center w-10 h-10 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-20 transition-all shadow-sm"
-          >
-            <ChevronRight size={18} />
-          </button>
+      {filteredAndSortedEvents.length === 0 && (
+        <div className="py-20 text-center border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl">
+          <p className="text-slate-400 dark:text-slate-500 text-sm font-medium">No events match your search.</p>
         </div>
-      </div>
+      )}
+
+      {/* Pagination */}
+      {filteredAndSortedEvents.length > 0 && (
+        <div className="mt-8 flex flex-col items-center gap-6 sm:flex-row sm:justify-between border-t border-slate-100 dark:border-slate-800/60 pt-6">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            Showing <span className="text-slate-900 dark:text-white font-mono">{startIndex + 1}</span> -{" "}
+            <span className="text-slate-900 dark:text-white font-mono">
+              {Math.min(startIndex + itemsPerPage, filteredAndSortedEvents.length)}
+            </span>{" "}
+            of <span className="font-mono">{filteredAndSortedEvents.length}</span>
+          </p>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={goToPrev}
+              disabled={currentPage === 1}
+              className="flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/10 disabled:opacity-30 transition-colors"
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <div className="flex items-center px-4 h-9 bg-slate-900 dark:bg-indigo-600 rounded-lg text-white font-bold text-xs font-mono">
+              {currentPage} / {totalPages}
+            </div>
+            <button
+              onClick={goToNext}
+              disabled={currentPage === totalPages}
+              className="flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/10 disabled:opacity-30 transition-colors"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

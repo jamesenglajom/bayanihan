@@ -3,15 +3,15 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { 
-  Calendar, 
-  MapPin, 
-  Tag, 
-  Image as ImageIcon, 
-  AlignLeft, 
-  Save, 
-  Loader2, 
-  Link as LinkIcon, 
+import {
+  Calendar,
+  MapPin,
+  Tag,
+  Image as ImageIcon,
+  AlignLeft,
+  Save,
+  Loader2,
+  Link as LinkIcon,
   Plus,
   X
 } from "lucide-react";
@@ -22,7 +22,7 @@ export default function EventsForm({ event }) {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ type: "", text: "" });
   const [showPicker, setShowPicker] = useState(false);
-  
+
   // Track selected image for immediate UI feedback
   const [selectedImage, setSelectedImage] = useState(event?.image || "");
 
@@ -38,13 +38,7 @@ export default function EventsForm({ event }) {
       const url = event ? "/api/events/update" : "/api/events/save";
       const method = event ? "PUT" : "POST";
 
-      const payload = event 
-        ? { 
-            id: event.id, 
-            oldEventString: JSON.stringify(event), 
-            newData: data 
-          } 
-        : data;
+      const payload = event ? { id: event.id, ...data } : data;
 
       const response = await fetch(url, {
         method: method,
@@ -54,8 +48,8 @@ export default function EventsForm({ event }) {
 
       if (!response.ok) throw new Error("Failed to save event. Please check your connection.");
 
-      setStatus({ type: "success", text: `Event ${event ? "updated" : "created"} successfully! 🎉` });
-      
+      setStatus({ type: "success", text: `Event ${event ? "updated" : "created"} successfully!` });
+
       setTimeout(() => {
         router.push("/admin/events");
       }, 1500);
@@ -71,22 +65,22 @@ export default function EventsForm({ event }) {
     e.stopPropagation();
     setSelectedImage("")
   }
-  // Senior UI Design System Constants
-  const inputBase = "w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-200 text-gray-700 placeholder:text-gray-400";
-  const labelBase = "flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5 ml-1";
-  
+
+  const inputBase = "w-full px-4 py-2.5 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-slate-800 rounded-lg focus:bg-white dark:focus:bg-white/8 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all duration-200 text-slate-700 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600";
+  const labelBase = "flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5 ml-1";
+
   return (
-    <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
+    <div className="max-w-3xl mx-auto bg-white dark:bg-white/2 rounded-2xl border border-slate-200 dark:border-slate-800/60 overflow-hidden">
       {/* Header */}
-      <div className="px-8 py-6 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">
+      <div className="px-8 py-6 bg-gradient-to-b from-slate-50 to-white dark:from-white/3 dark:to-transparent border-b border-slate-100 dark:border-slate-800/60">
+        <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
           {!event ? "Create New Event" : "Edit Event Details"}
         </h2>
-        <p className="text-sm text-gray-500 mt-1">Manage your event content and external connection links.</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Manage your event content and external connection links.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="p-8 space-y-6">
-        
+
         {/* Row 1: Name & Category */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -121,7 +115,7 @@ export default function EventsForm({ event }) {
               type="datetime-local"
               defaultValue={event?.date ? event.date.slice(0, 16) : ""}
               required
-              className={inputBase}
+              className={`${inputBase} scheme-light dark:scheme-dark`}
             />
           </div>
           <div>
@@ -140,19 +134,19 @@ export default function EventsForm({ event }) {
         {/* Row 3: Image Selection Area */}
         <div className="space-y-4">
           <label className={labelBase}><ImageIcon size={14} /> Cover Image</label>
-          
+
           {/* Interactive Preview Trigger */}
-          <div 
+          <div
             onClick={() => setShowPicker(true)}
-            className="relative group cursor-pointer aspect-[21/9] w-full rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 overflow-hidden hover:border-blue-400 hover:bg-blue-50/30 transition-all duration-300"
+            className="relative group cursor-pointer aspect-21/9 w-full rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-white/2 overflow-hidden hover:border-indigo-400 dark:hover:border-indigo-500/50 hover:bg-indigo-50/30 dark:hover:bg-indigo-500/5 transition-all duration-300"
           >
             {selectedImage ? (
               <>
-                <Image 
-                  src={selectedImage} 
-                  alt="Preview" 
-                  fill 
-                  className="object-cover group-hover:scale-105 transition-transform duration-500" 
+                <Image
+                  src={selectedImage}
+                  alt="Preview"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white backdrop-blur-[2px]">
                   <ImageIcon size={32} className="mb-2" />
@@ -160,12 +154,14 @@ export default function EventsForm({ event }) {
                   <button onClick={removeImage}
                   disabled={selectedImage === ""}
                   title="Remove Image"
-                  className="bg-red-700 transition-colors flex mt-5 w-[30px] h-[30px] items-center justify-center rounded-sm cursor-pointer disabled:pointer-events-none disabled:bg-red-700/15">X</button>
+                  className="bg-rose-600 hover:bg-rose-700 transition-colors flex mt-5 w-8 h-8 items-center justify-center rounded-lg cursor-pointer disabled:pointer-events-none disabled:opacity-20">
+                    <X size={16} />
+                  </button>
                 </div>
               </>
             ) : (
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
-                <div className="p-4 bg-white rounded-2xl shadow-sm mb-3 group-hover:text-blue-500 group-hover:scale-110 transition-all">
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 dark:text-slate-600">
+                <div className="p-4 bg-white dark:bg-white/5 rounded-xl shadow-sm mb-3 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 group-hover:scale-110 transition-all">
                   <Plus size={24} />
                 </div>
                 <p className="text-xs font-bold uppercase tracking-tighter">Click to select from Library</p>
@@ -183,15 +179,15 @@ export default function EventsForm({ event }) {
               placeholder="https://example.com/image.jpg"
               className={inputBase}
             />
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-black text-gray-300 uppercase tracking-widest pointer-events-none">
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-300 dark:text-slate-700 uppercase tracking-widest pointer-events-none">
               Direct Link
             </div>
           </div>
         </div>
 
         {/* Row 4: External Link Logic */}
-        <div className="p-5 bg-blue-50/30 rounded-2xl border border-blue-100/50 space-y-4">
-          <h3 className="text-sm font-bold text-blue-900 flex items-center gap-2">
+        <div className="p-5 bg-indigo-50/30 dark:bg-indigo-500/5 rounded-2xl border border-indigo-100/50 dark:border-indigo-500/20 space-y-4">
+          <h3 className="text-sm font-bold text-indigo-900 dark:text-indigo-300 flex items-center gap-2">
             <LinkIcon size={16} /> External Call-to-Action
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -241,7 +237,9 @@ export default function EventsForm({ event }) {
         {/* Feedback Alert */}
         {status.text && (
           <div className={`flex items-center gap-3 p-4 rounded-xl text-sm font-semibold animate-in fade-in slide-in-from-top-1 ${
-            status.type === "success" ? "bg-emerald-50 text-emerald-700 border border-emerald-100" : "bg-rose-50 text-rose-700 border border-rose-100"
+            status.type === "success"
+              ? "bg-emerald-50 text-emerald-700 border border-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20"
+              : "bg-rose-50 text-rose-700 border border-rose-100 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20"
           }`}>
             <span>{status.type === "success" ? "✓" : "✕"}</span>
             {status.text}
@@ -252,7 +250,7 @@ export default function EventsForm({ event }) {
         <button
           type="submit"
           disabled={loading}
-          className="group w-full flex items-center justify-center gap-2 py-4 bg-gray-900 hover:bg-blue-600 text-white font-bold rounded-xl transition-all duration-300 active:scale-[0.98] disabled:opacity-50 shadow-lg shadow-gray-100"
+          className="group w-full flex items-center justify-center gap-2 py-4 bg-slate-900 hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white font-bold rounded-xl transition-colors duration-300 active:scale-[0.98] disabled:opacity-50 shadow-sm"
         >
           {loading ? (
             <Loader2 className="animate-spin" size={20} />
@@ -267,13 +265,13 @@ export default function EventsForm({ event }) {
 
       {/* Image Picker Modal Trigger */}
       {showPicker && (
-        <ImagePicker 
+        <ImagePicker
           source="/images/events"
-          onClose={() => setShowPicker(false)} 
+          onClose={() => setShowPicker(false)}
           onSelect={(url) => {
             setSelectedImage(url);
             setShowPicker(false);
-          }} 
+          }}
         />
       )}
     </div>

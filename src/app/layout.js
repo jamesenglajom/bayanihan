@@ -1,4 +1,5 @@
 import { Poppins, Fraunces } from "next/font/google";
+import { ThemeProvider } from "@/app/components/ThemeProvider";
 import "./globals.css";
 
 export const poppins = Poppins({
@@ -26,14 +27,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/vkg0ejp.css" />
       </head>
       <body
-        className={`${poppins.variable} ${fraunces.variable} antialiased`}
+        className={`${poppins.variable} ${fraunces.variable} antialiased bg-slate-50 dark:bg-[#0B1120] transition-colors duration-200`}
       >
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

@@ -1,14 +1,12 @@
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
-import { UpstashRedisAdapter } from "@auth/upstash-redis-adapter";
-import { redis } from "@/app/lib/upstash";
+import { supabase } from "@/app/lib/supabase";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
-  adapter: UpstashRedisAdapter(redis),
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
@@ -24,9 +22,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         try {
           if (!credentials?.username || !credentials?.password) return null;
 
-          // Log this to see if Upstash is responding
-          const result = await redis.get(`user:${credentials.username}`);
-          const user = typeof result === "string" ? JSON.parse(result) : result;
+          const { data: user } = await supabase
+            .from("users")
+            .select("*")
+            .eq("username", credentials.username)
+            .maybeSingle();
 
           if (!user || !user.password) return null;
 
@@ -80,19 +80,18 @@ export const createUser = async(username, plainPassword) =>  {
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
 
-  // 2. Prepare the user object
+  // 2. Prepare the user row
   const newUser = {
     id: Date.now(), // Or a UUID
     username: username.toLowerCase(),
     password: hashedPassword, // Store the HASH, not the plain text
     role: "user",
-    createdAt: new Date().toISOString(),
   };
 
-  // 3. Save to Redis
-  // Key format: user:username
-  await redis.set(`user:${newUser.username}`, JSON.stringify(newUser));
-  
+  // 3. Save to Supabase
+  const { error } = await supabase.from("users").insert(newUser);
+  if (error) throw new Error(error.message);
+
   return { success: true };
 }
 

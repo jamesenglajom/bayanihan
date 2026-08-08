@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import { unstable_cache } from 'next/cache';
-import { redis } from "@/app/lib/upstash";
+import { supabase } from "@/app/lib/supabase";
 import { generateHTML } from "@tiptap/html";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
@@ -20,49 +20,31 @@ export const getCachedBlogs = unstable_cache(
 
 export const getBlogs = async () => {
   try {
-    // 1. Get the Index (Source of Truth) from environment variable key
-    const blogsKey = process.env.UPSTASH_KEY_BLOGS;
-    const blogIds = (await redis.get(blogsKey)) || [];
+    // Slim payload for list views: omit the heavy Tiptap 'content' column
+    const { data, error } = await supabase
+      .from("blogs")
+      .select("id, handle, title, excerpt, author, badge, read_duration, main_image, categories, published_at, created_at, updated_at")
+      .order("published_at", { ascending: false });
 
-    // 2. Guard: If no blogs exist, return empty array immediately
-    // This prevents calling mget with empty arguments which causes an error
-    if (!blogIds || blogIds.length === 0) {
-      return [];
-    }
-
-    // 3. Fetch all data in one efficient round-trip
-    const allBlogs = await redis.mget(...blogIds);
-
-    // console.log("allBlogs", allBlogs);
-
-    // 4. Filter, Transform, and Sort
-    // filter(Boolean) removes nulls if an ID exists but the data was deleted
-    return allBlogs
-      .filter(Boolean)
-      .map(({ content, ...rest }) => ({
-        ...rest, 
-        // We omit the 'content' (Tiptap JSON) to keep the table payload light
-      }))
-      .sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
+    if (error) throw error;
+    return data || [];
 
   } catch (error) {
     console.error("Detailed Error Loading Blogs: ", error);
     // Return a specific error object instead of just a string
-    return { error: true, message: "Could not synchronize with BES Cloud. Check Redis connection." };
+    return { error: true, message: "Could not synchronize with BES Cloud. Check Supabase connection." };
   }
 };
 
 export async function getBlogById (id) {
     if(!id) return null;
-    const blog_id = `blog-${id}`;
-    const blog = await redis.get(blog_id);
-    return blog;
+    const { data } = await supabase.from("blogs").select("*").eq("id", id).maybeSingle();
+    return data;
 }
 
 export async function getBlogByHandle (handle) {
-  const handle_key = `handle:${handle}`;
-  const blog_id = await redis.get(handle_key);
-  const blog = await redis.get(blog_id);
+  const { data: blog } = await supabase.from("blogs").select("*").eq("handle", handle).maybeSingle();
+  if (!blog) return null;
   blog["content"] = generateHTML(blog?.content, [
     StarterKit,
     Image,

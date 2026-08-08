@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server';
-import { redis } from '@/app/lib/upstash';
+import { supabase } from '@/app/lib/supabase';
 
 export async function GET() {
   try {
-    const data = await redis.get(process.env.UPSTASH_KEY_FAQ);
+    const { data, error } = await supabase
+      .from('faqs')
+      .select('id, question, answer')
+      .order('sort_order', { ascending: true });
+
+    if (error) throw error;
     return NextResponse.json(data || [], { status: 200 });
   } catch (error) {
     console.error("GET Error:", error);

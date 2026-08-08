@@ -1,5 +1,4 @@
 import React from "react";
-import { redis } from "@/app/lib/upstash";
 import BlogsTable from "@/app/components/admin/BlogsTable";
 import { getCachedBlogs } from "@/app/lib/fn_server"
 export const metadata = {

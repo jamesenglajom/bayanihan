@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { LogOut, LayoutGrid, Calendar, HelpCircle, User, Loader2, ShieldCheck, X } from "lucide-react";
+import { LogOut, LayoutGrid, Calendar, HelpCircle, Image as ImageIcon, Database, User, Loader2, ShieldCheck, X } from "lucide-react";
 import { handleLogout } from "@/app/lib/actions";
 import { useHasMounted } from "@/app/hooks/use-has-mounted";
 
@@ -14,6 +14,9 @@ export const adminNav = [
   { type: "menu-item", url: "/admin/blogs", label: "Editorial Blogs", icon: <LayoutGrid size={18} /> },
   { type: "menu-item", url: "/admin/events", label: "Cultural Events", icon: <Calendar size={18} /> },
   { type: "menu-item", url: "/admin/faqs", label: "Knowledge Base", icon: <HelpCircle size={18} /> },
+  { type: "menu-item", url: "/admin/media", label: "Media Library", icon: <ImageIcon size={18} /> },
+  { type: "separator", label: "System" },
+  { type: "menu-item", url: "/admin/supabase", label: "Supabase", icon: <Database size={18} /> },
 ];
 
 function AdminSidebar({ open = false, onClose = () => {} }) {

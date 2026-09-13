@@ -266,7 +266,6 @@ export default function EventsForm({ event }) {
       {/* Image Picker Modal Trigger */}
       {showPicker && (
         <ImagePicker
-          source="/images/events"
           onClose={() => setShowPicker(false)}
           onSelect={(url) => {
             setSelectedImage(url);
